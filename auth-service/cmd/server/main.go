@@ -2,19 +2,14 @@ package main
 
 import (
 	"auth/internal/config"
-	"auth/internal/handler"
+	"auth/internal/grpcserver"
 	"auth/internal/logging"
-	"auth/internal/middleware"
 	"auth/internal/models"
 	"auth/internal/repository"
-	"auth/internal/router"
-	"auth/internal/server"
 	"auth/internal/service"
 	"auth/internal/storage"
 	"context"
-	"errors"
 	"fmt"
-	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
@@ -25,58 +20,54 @@ import (
 )
 
 func main() {
-	if err := gotenv.Load(".env"); err != nil {
+	if err := gotenv.Load(".env"); err != nil && !os.IsNotExist(err) {
 		fmt.Println(err)
 		return
 	}
 	config.Init()
 	cfg := config.NewConfig()
+	grpcCfg := config.NewGRPCConfig()
 	dbConfig := config.NewDBConfig()
 	redisConfig := config.NewRedisConfig()
 	ctx := context.Background()
 	prefix := "refresh"
 
-	logging.InitLogger(cfg.LoggingMode)
+	if err := logging.InitLogger(cfg.LoggingMode); err != nil {
+		fmt.Println(err)
+		return
+	}
 	logger := logging.Logger
 
-	logger.Info("Starting server... with", zap.String("host", cfg.Host), zap.String("port", cfg.Port))
+	logger.Info("Starting auth-service gRPC server",
+		zap.String("host", grpcCfg.Host),
+		zap.String("port", grpcCfg.Port),
+	)
 
-	// DATABASE
 	db, err := storage.NewDatabase(dbConfig, models.ModelsList)
 	if err != nil {
 		logger.Fatal("Error while creating database", zap.Error(err))
 	}
 
-	// REDIS
 	redisClient := storage.NewRedisClient(redisConfig)
-
 	accessTokenTTL := time.Duration(cfg.AccessTokenExpiration) * time.Second
+	refreshTokenTTL := time.Duration(cfg.RefreshTokenExpiration) * time.Second
 
-	// USER REPOSITORY
 	userRepo := repository.NewUserRepository(db)
 	tokenRepo := repository.NewTokenRepository(redisClient, ctx, prefix, cfg.JWTSecretKey, accessTokenTTL, "auth-service")
-	// SERVICES
-	userService := service.NewUserService(userRepo)
 
-	tokenService := service.NewTokenService(tokenRepo, ctx, accessTokenTTL)
+	userService := service.NewUserService(userRepo)
+	tokenService := service.NewTokenService(tokenRepo, refreshTokenTTL)
 	authService := service.NewAuthService(userService, tokenService)
 
-	// HANDLER
-	h := handler.NewHandler(userService, authService)
-
-	// MIDDLEWARE
-	authMiddleware := middleware.AuthMiddleware(tokenService)
-
-	// ROUTER
-	router := router.SetupRouter(h, authMiddleware)
-	srv, err := server.NewServer(cfg, h, router)
-
+	grpcAuthServer := grpcserver.NewAuthServer(authService)
+	grpcSrv, err := grpcserver.NewServer(grpcCfg, grpcAuthServer)
 	if err != nil {
-		logger.Fatal("Error while starting server", zap.Error(err))
+		logger.Fatal("failed to create gRPC server", zap.Error(err))
 	}
+
 	go func() {
-		if err := srv.Start(); err != nil && !errors.Is(err, http.ErrServerClosed) {
-			logger.Fatal("Error while starting server", zap.Error(err))
+		if err := grpcSrv.Start(); err != nil {
+			logger.Fatal("Error while starting gRPC server", zap.Error(err))
 		}
 	}()
 
@@ -87,13 +78,6 @@ func main() {
 	<-quit
 
 	logger.Info("Shutting down server...")
-
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-
-	if err := srv.Stop(ctx); err != nil {
-		logger.Fatal("Error while stopping server")
-	}
-
+	grpcSrv.Stop()
 	logger.Info("Server stopped")
 }

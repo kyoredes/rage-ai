@@ -7,22 +7,24 @@ import (
 	"auth/internal/models"
 	"auth/internal/storage"
 	"fmt"
+	"os"
 
 	"github.com/subosito/gotenv"
-	"go.uber.org/zap"
 )
 
 func main() {
+	if err := gotenv.Load(".env"); err != nil && !os.IsNotExist(err) {
+		fmt.Println(err)
+		return
+	}
 	config.Init()
 	cfg := config.NewConfig()
 
-	logging.InitLogger(cfg.LoggingMode)
-	logger := logging.Logger
-	err := gotenv.Load(".env")
-
-	if err != nil {
-		logger.Fatal("Error loading .env file", zap.Error(err))
+	if err := logging.InitLogger(cfg.LoggingMode); err != nil {
+		fmt.Println(err)
+		return
 	}
+
 	db, err := storage.NewDatabase(config.NewDBConfig(), models.ModelsList)
 	if err != nil {
 		fmt.Println(err)

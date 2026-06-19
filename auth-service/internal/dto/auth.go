@@ -1,11 +1,7 @@
 package dto
 
-type Tokens struct {
+type TelegramStartResult struct {
+	UserID       string
 	AccessToken  string
 	RefreshToken string
-}
-
-type RefreshRequest struct {
-	RefreshToken string `json:"RefreshToken" binding:"required"`
-	DeviceID     string `json:"DeviceID" binding:"required"`
 }

@@ -18,6 +18,21 @@ type Config struct {
 	Timeout                time.Duration
 }
 
+type GRPCConfig struct {
+	Host string
+	Port string
+}
+
+func NewGRPCConfig() *GRPCConfig {
+	host := viper.GetString("GRPC_HOST")
+	port := viper.GetString("GRPC_PORT")
+
+	return &GRPCConfig{
+		Host: host,
+		Port: port,
+	}
+}
+
 type DBConfig struct {
 	Host      string
 	Port      int
@@ -97,6 +112,8 @@ func Init() {
 	viper.AutomaticEnv()
 	viper.SetDefault("HOST", "localhost")
 	viper.SetDefault("PORT", "8080")
+	viper.SetDefault("GRPC_HOST", "0.0.0.0")
+	viper.SetDefault("GRPC_PORT", "50051")
 	viper.SetDefault("DB_HOST", "localhost")
 	viper.SetDefault("DB_PORT", 5432)
 	viper.SetDefault("DB_USER", "postgres")
@@ -106,7 +123,7 @@ func Init() {
 
 	viper.SetDefault("DEBUG", false)
 	viper.SetDefault("LOGGING_MODE", "text")
-	viper.SetDefault("JWT_SECRET_KEY", "secret")
+	viper.SetDefault("JWT_SECRET_KEY", "dev-jwt-secret-key-change-in-prod!!")
 	viper.SetDefault("ACCESS_TOKEN_EXPIRATION", 3600)
 	viper.SetDefault("REFRESH_TOKEN_EXPIRATION", 86400)
 	viper.SetDefault("TIMEOUT", "5s")
