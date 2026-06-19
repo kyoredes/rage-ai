@@ -16,8 +16,8 @@ mkdir -p "${ROOT}/proto/gen/go/ai/v1"
 
 "${PROTOC}" \
   --proto_path="${ROOT}/proto" \
-  --go_out="${ROOT}/proto/gen/go" --go_opt=module=rageai/proto/gen/go \
-  --go-grpc_out="${ROOT}/proto/gen/go" --go-grpc_opt=module=rageai/proto/gen/go \
+  --go_out="${ROOT}/proto/gen/go" --go_opt=module=agrobot/proto/gen/go \
+  --go-grpc_out="${ROOT}/proto/gen/go" --go-grpc_opt=module=agrobot/proto/gen/go \
   "${ROOT}/proto/auth/v1/auth.proto" \
   "${ROOT}/proto/subscription/v1/subscription.proto" \
   "${ROOT}/proto/ai/v1/ai.proto"

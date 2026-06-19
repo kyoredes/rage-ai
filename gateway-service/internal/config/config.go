@@ -70,6 +70,22 @@ func NewAIConfig() *AIConfig {
 	}
 }
 
+type AdminConfig struct {
+	Username   string
+	Password   string
+	JWTSecret  string
+	CORSOrigin string
+}
+
+func NewAdminConfig() *AdminConfig {
+	return &AdminConfig{
+		Username:   viper.GetString("ADMIN_USERNAME"),
+		Password:   viper.GetString("ADMIN_PASSWORD"),
+		JWTSecret:  viper.GetString("ADMIN_JWT_SECRET"),
+		CORSOrigin: viper.GetString("ADMIN_CORS_ORIGIN"),
+	}
+}
+
 func Init() {
 	viper.AutomaticEnv()
 	viper.SetDefault("HOST", "0.0.0.0")
@@ -88,4 +104,9 @@ func Init() {
 	viper.SetDefault("AI_GRPC_PORT", "50053")
 
 	viper.SetDefault("COMMON_PUB_KEY", "secret")
+
+	viper.SetDefault("ADMIN_USERNAME", "admin")
+	viper.SetDefault("ADMIN_PASSWORD", "changeme")
+	viper.SetDefault("ADMIN_JWT_SECRET", "admin-jwt-secret-change-in-prod")
+	viper.SetDefault("ADMIN_CORS_ORIGIN", "http://localhost:5173")
 }

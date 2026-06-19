@@ -58,8 +58,10 @@ func main() {
 	userService := service.NewUserService(userRepo)
 	tokenService := service.NewTokenService(tokenRepo, refreshTokenTTL)
 	authService := service.NewAuthService(userService, tokenService)
+	adminService := service.NewAdminService(userRepo)
+	healthService := service.NewHealthService(userRepo, redisClient)
 
-	grpcAuthServer := grpcserver.NewAuthServer(authService)
+	grpcAuthServer := grpcserver.NewAuthServer(authService, adminService, healthService)
 	grpcSrv, err := grpcserver.NewServer(grpcCfg, grpcAuthServer)
 	if err != nil {
 		logger.Fatal("failed to create gRPC server", zap.Error(err))

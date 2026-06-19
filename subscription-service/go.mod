@@ -11,10 +11,10 @@ require (
 	google.golang.org/grpc v1.71.0
 	gorm.io/driver/postgres v1.6.0
 	gorm.io/gorm v1.25.10
-	rageai/proto v0.0.0
+	agrobot/proto v0.0.0
 )
 
-replace rageai/proto => ../proto
+replace agrobot/proto => ../proto
 
 require (
 	github.com/fsnotify/fsnotify v1.9.0 // indirect

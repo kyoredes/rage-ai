@@ -1,4 +1,4 @@
-module rageai/proto
+module agrobot/proto
 
 go 1.24.0
 

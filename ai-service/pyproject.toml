@@ -1,7 +1,7 @@
 [project]
 name = "ai-service"
 version = "0.1.0"
-description = "RageAI LLM gRPC service"
+description = "Agrobot LLM gRPC service"
 requires-python = ">=3.13"
 dependencies = [
     "g4f>=0.6.0.2",

@@ -6,12 +6,12 @@ disable_g4f_media_writes()
 
 from g4f.client import AsyncClient
 
-from config.prompts import G4F_SYSTEM_PROMPT
 from config.settings import settings
 from llm.errors import G4F_FALLBACK_ERROR_MESSAGE, LLMUserFacingError
 from llm.g4f_models import G4F_FALLBACK_MODELS, G4F_MODELS, G4FModelConfig
-from llm.history.messages import to_openai_messages
+from llm.history.messages import to_g4f_messages
 from llm.history.store import ChatHistoryStore
+from llm.prompt.store import SystemPromptStore
 from utils.response import is_invalid_llm_response
 
 logger = logging.getLogger(__name__)
@@ -108,8 +108,9 @@ class G4FManager:
         await self._add_message("user", message)
 
         try:
-            messages = to_openai_messages(
-                G4F_SYSTEM_PROMPT,
+            system_prompt = await SystemPromptStore().get_effective(for_g4f=True)
+            messages = to_g4f_messages(
+                system_prompt,
                 await self.history.load(),
             )
             response = await self._get_response(messages)

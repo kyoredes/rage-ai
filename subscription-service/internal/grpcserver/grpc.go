@@ -6,7 +6,7 @@ import (
 	"subscription/internal/config"
 	"subscription/internal/logging"
 
-	subscriptionv1 "rageai/proto/gen/go/subscription/v1"
+	subscriptionv1 "agrobot/proto/gen/go/subscription/v1"
 
 	"go.uber.org/zap"
 	"google.golang.org/grpc"

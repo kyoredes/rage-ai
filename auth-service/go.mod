@@ -13,7 +13,7 @@ require (
 	google.golang.org/grpc v1.71.0
 	gorm.io/driver/postgres v1.6.0
 	gorm.io/gorm v1.31.1
-	rageai/proto v0.0.0
+	agrobot/proto v0.0.0
 )
 
 require (
@@ -44,4 +44,4 @@ require (
 	google.golang.org/protobuf v1.36.9 // indirect
 )
 
-replace rageai/proto => ../proto
+replace agrobot/proto => ../proto

@@ -64,6 +64,14 @@ class ChatHistoryStore:
     async def save(self, messages: list[ChatMessage]) -> None:
         await self._save(messages)
 
+    async def clear(self) -> None:
+        if not self._available:
+            return
+        try:
+            await self._redis.delete(self.key)
+        except Exception as exc:
+            logger.error("Error clearing chat history: %s", exc)
+
     async def append(self, role: str, content: str) -> None:
         if not self._available or is_invalid_llm_response(content):
             return

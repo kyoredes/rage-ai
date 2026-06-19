@@ -2,10 +2,15 @@ syntax = "proto3";
 
 package subscription.v1;
 
-option go_package = "rageai/proto/gen/go/subscription/v1;subscriptionv1";
+option go_package = "agrobot/proto/gen/go/subscription/v1;subscriptionv1";
 
 service SubscriptionService {
   rpc GetSubscriptionByUserId(GetSubscriptionByUserIdRequest) returns (GetSubscriptionByUserIdResponse);
+  rpc ListSubscriptions(ListSubscriptionsRequest) returns (ListSubscriptionsResponse);
+  rpc UpdateSubscription(UpdateSubscriptionRequest) returns (UpdateSubscriptionResponse);
+  rpc DeleteSubscription(DeleteSubscriptionRequest) returns (DeleteSubscriptionResponse);
+  rpc GetStats(GetSubscriptionStatsRequest) returns (GetSubscriptionStatsResponse);
+  rpc Health(HealthRequest) returns (HealthResponse);
 }
 
 message GetSubscriptionByUserIdRequest {
@@ -17,4 +22,57 @@ message GetSubscriptionByUserIdResponse {
   string user_id = 2;
   int64 starts_at = 3;
   int64 expires_at = 4;
+}
+
+message ListSubscriptionsRequest {
+  int32 page = 1;
+  int32 limit = 2;
+  string status = 3;
+}
+
+message SubscriptionItem {
+  string subscription_id = 1;
+  string user_id = 2;
+  int64 starts_at = 3;
+  int64 expires_at = 4;
+}
+
+message ListSubscriptionsResponse {
+  repeated SubscriptionItem subscriptions = 1;
+  int32 total = 2;
+}
+
+message UpdateSubscriptionRequest {
+  string subscription_id = 1;
+  int64 starts_at = 2;
+  int64 expires_at = 3;
+}
+
+message UpdateSubscriptionResponse {
+  string subscription_id = 1;
+  string user_id = 2;
+  int64 starts_at = 3;
+  int64 expires_at = 4;
+}
+
+message DeleteSubscriptionRequest {
+  string subscription_id = 1;
+}
+
+message DeleteSubscriptionResponse {}
+
+message GetSubscriptionStatsRequest {}
+
+message GetSubscriptionStatsResponse {
+  int32 total = 1;
+  int32 active = 2;
+  int32 expired = 3;
+}
+
+message HealthRequest {}
+
+message HealthResponse {
+  bool ok = 1;
+  bool db_ok = 2;
+  bool redis_ok = 3;
 }

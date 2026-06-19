@@ -45,8 +45,10 @@ func main() {
 
 	subscriptionRepo := repository.NewSubscriptionRepository(db)
 	subscriptionService := service.NewSubscriptionService(subscriptionRepo)
+	adminService := service.NewAdminService(subscriptionRepo)
+	healthService := service.NewHealthService(subscriptionRepo)
 
-	grpcSubServer := grpcserver.NewSubscriptionServer(subscriptionService)
+	grpcSubServer := grpcserver.NewSubscriptionServer(subscriptionService, adminService, healthService)
 	grpcSrv, err := grpcserver.NewServer(grpcCfg, grpcSubServer)
 	if err != nil {
 		logger.Fatal("failed to create gRPC server", zap.Error(err))

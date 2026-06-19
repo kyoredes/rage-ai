@@ -2,12 +2,15 @@ import logging
 
 import grpc
 
+from grpcserver.admin import AdminService
 from llm.errors import LLMUserFacingError
 from llm.manager import LLMManager
 from rpc.ai.v1 import ai_pb2, ai_pb2_grpc
 from utils.response import is_invalid_llm_response
 
 logger = logging.getLogger(__name__)
+
+_admin_service = AdminService()
 
 
 class AIServer(ai_pb2_grpc.AIServiceServicer):
@@ -48,4 +51,82 @@ class AIServer(ai_pb2_grpc.AIServiceServicer):
         return ai_pb2.ChatResponse(
             telegram_id=telegram_id,
             response=response,
+        )
+
+    async def GetChatHistory(self, request, context):
+        telegram_id = request.telegram_id.strip()
+        if not telegram_id:
+            context.set_code(grpc.StatusCode.INVALID_ARGUMENT)
+            context.set_details("telegram_id is required")
+            return ai_pb2.GetChatHistoryResponse()
+
+        messages = await _admin_service.get_chat_history(telegram_id)
+        return ai_pb2.GetChatHistoryResponse(
+            telegram_id=telegram_id,
+            messages=[
+                ai_pb2.ChatMessage(role=m["role"], content=m["content"])
+                for m in messages
+            ],
+        )
+
+    async def ClearChatHistory(self, request, context):
+        telegram_id = request.telegram_id.strip()
+        if not telegram_id:
+            context.set_code(grpc.StatusCode.INVALID_ARGUMENT)
+            context.set_details("telegram_id is required")
+            return ai_pb2.ClearChatHistoryResponse()
+
+        await _admin_service.clear_chat_history(telegram_id)
+        return ai_pb2.ClearChatHistoryResponse()
+
+    async def ListChatSessions(self, request, context):
+        sessions, total = await _admin_service.list_chat_sessions(
+            request.page or 1,
+            request.limit or 20,
+        )
+        return ai_pb2.ListChatSessionsResponse(
+            sessions=[
+                ai_pb2.ChatSessionItem(
+                    telegram_id=s["telegram_id"],
+                    message_count=s["message_count"],
+                )
+                for s in sessions
+            ],
+            total=total,
+        )
+
+    async def GetLLMConfig(self, request, context):
+        config = _admin_service.get_llm_config()
+        return ai_pb2.GetLLMConfigResponse(
+            model=config["model"],
+            temperature=config["temperature"],
+            max_tokens=config["max_tokens"],
+            debug=config["debug"],
+            provider=config["provider"],
+            g4f_models=config["g4f_models"],
+            uses_litellm=config["uses_litellm"],
+        )
+
+    async def GetSystemPrompt(self, request, context):
+        data = await _admin_service.get_system_prompt()
+        return ai_pb2.GetSystemPromptResponse(
+            prompt=data["prompt"],
+            default_prompt=data["default_prompt"],
+            is_custom=data["is_custom"],
+        )
+
+    async def UpdateSystemPrompt(self, request, context):
+        data = await _admin_service.update_system_prompt(request.prompt)
+        return ai_pb2.UpdateSystemPromptResponse(
+            prompt=data["prompt"],
+            default_prompt=data["default_prompt"],
+            is_custom=data["is_custom"],
+        )
+
+    async def Health(self, request, context):
+        data = await _admin_service.check_health()
+        return ai_pb2.HealthResponse(
+            ok=data["ok"],
+            db_ok=data["db_ok"],
+            redis_ok=data["redis_ok"],
         )

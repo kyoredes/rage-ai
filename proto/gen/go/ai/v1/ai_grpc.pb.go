@@ -19,7 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AIService_Chat_FullMethodName = "/ai.v1.AIService/Chat"
+	AIService_Chat_FullMethodName               = "/ai.v1.AIService/Chat"
+	AIService_GetChatHistory_FullMethodName     = "/ai.v1.AIService/GetChatHistory"
+	AIService_ClearChatHistory_FullMethodName   = "/ai.v1.AIService/ClearChatHistory"
+	AIService_ListChatSessions_FullMethodName   = "/ai.v1.AIService/ListChatSessions"
+	AIService_GetLLMConfig_FullMethodName       = "/ai.v1.AIService/GetLLMConfig"
+	AIService_GetSystemPrompt_FullMethodName    = "/ai.v1.AIService/GetSystemPrompt"
+	AIService_UpdateSystemPrompt_FullMethodName = "/ai.v1.AIService/UpdateSystemPrompt"
+	AIService_Health_FullMethodName             = "/ai.v1.AIService/Health"
 )
 
 // AIServiceClient is the client API for AIService service.
@@ -27,6 +34,13 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AIServiceClient interface {
 	Chat(ctx context.Context, in *ChatRequest, opts ...grpc.CallOption) (*ChatResponse, error)
+	GetChatHistory(ctx context.Context, in *GetChatHistoryRequest, opts ...grpc.CallOption) (*GetChatHistoryResponse, error)
+	ClearChatHistory(ctx context.Context, in *ClearChatHistoryRequest, opts ...grpc.CallOption) (*ClearChatHistoryResponse, error)
+	ListChatSessions(ctx context.Context, in *ListChatSessionsRequest, opts ...grpc.CallOption) (*ListChatSessionsResponse, error)
+	GetLLMConfig(ctx context.Context, in *GetLLMConfigRequest, opts ...grpc.CallOption) (*GetLLMConfigResponse, error)
+	GetSystemPrompt(ctx context.Context, in *GetSystemPromptRequest, opts ...grpc.CallOption) (*GetSystemPromptResponse, error)
+	UpdateSystemPrompt(ctx context.Context, in *UpdateSystemPromptRequest, opts ...grpc.CallOption) (*UpdateSystemPromptResponse, error)
+	Health(ctx context.Context, in *HealthRequest, opts ...grpc.CallOption) (*HealthResponse, error)
 }
 
 type aIServiceClient struct {
@@ -47,11 +61,88 @@ func (c *aIServiceClient) Chat(ctx context.Context, in *ChatRequest, opts ...grp
 	return out, nil
 }
 
+func (c *aIServiceClient) GetChatHistory(ctx context.Context, in *GetChatHistoryRequest, opts ...grpc.CallOption) (*GetChatHistoryResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetChatHistoryResponse)
+	err := c.cc.Invoke(ctx, AIService_GetChatHistory_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *aIServiceClient) ClearChatHistory(ctx context.Context, in *ClearChatHistoryRequest, opts ...grpc.CallOption) (*ClearChatHistoryResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ClearChatHistoryResponse)
+	err := c.cc.Invoke(ctx, AIService_ClearChatHistory_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *aIServiceClient) ListChatSessions(ctx context.Context, in *ListChatSessionsRequest, opts ...grpc.CallOption) (*ListChatSessionsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListChatSessionsResponse)
+	err := c.cc.Invoke(ctx, AIService_ListChatSessions_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *aIServiceClient) GetLLMConfig(ctx context.Context, in *GetLLMConfigRequest, opts ...grpc.CallOption) (*GetLLMConfigResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetLLMConfigResponse)
+	err := c.cc.Invoke(ctx, AIService_GetLLMConfig_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *aIServiceClient) GetSystemPrompt(ctx context.Context, in *GetSystemPromptRequest, opts ...grpc.CallOption) (*GetSystemPromptResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetSystemPromptResponse)
+	err := c.cc.Invoke(ctx, AIService_GetSystemPrompt_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *aIServiceClient) UpdateSystemPrompt(ctx context.Context, in *UpdateSystemPromptRequest, opts ...grpc.CallOption) (*UpdateSystemPromptResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateSystemPromptResponse)
+	err := c.cc.Invoke(ctx, AIService_UpdateSystemPrompt_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *aIServiceClient) Health(ctx context.Context, in *HealthRequest, opts ...grpc.CallOption) (*HealthResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(HealthResponse)
+	err := c.cc.Invoke(ctx, AIService_Health_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AIServiceServer is the server API for AIService service.
 // All implementations must embed UnimplementedAIServiceServer
 // for forward compatibility.
 type AIServiceServer interface {
 	Chat(context.Context, *ChatRequest) (*ChatResponse, error)
+	GetChatHistory(context.Context, *GetChatHistoryRequest) (*GetChatHistoryResponse, error)
+	ClearChatHistory(context.Context, *ClearChatHistoryRequest) (*ClearChatHistoryResponse, error)
+	ListChatSessions(context.Context, *ListChatSessionsRequest) (*ListChatSessionsResponse, error)
+	GetLLMConfig(context.Context, *GetLLMConfigRequest) (*GetLLMConfigResponse, error)
+	GetSystemPrompt(context.Context, *GetSystemPromptRequest) (*GetSystemPromptResponse, error)
+	UpdateSystemPrompt(context.Context, *UpdateSystemPromptRequest) (*UpdateSystemPromptResponse, error)
+	Health(context.Context, *HealthRequest) (*HealthResponse, error)
 	mustEmbedUnimplementedAIServiceServer()
 }
 
@@ -64,6 +155,27 @@ type UnimplementedAIServiceServer struct{}
 
 func (UnimplementedAIServiceServer) Chat(context.Context, *ChatRequest) (*ChatResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Chat not implemented")
+}
+func (UnimplementedAIServiceServer) GetChatHistory(context.Context, *GetChatHistoryRequest) (*GetChatHistoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetChatHistory not implemented")
+}
+func (UnimplementedAIServiceServer) ClearChatHistory(context.Context, *ClearChatHistoryRequest) (*ClearChatHistoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ClearChatHistory not implemented")
+}
+func (UnimplementedAIServiceServer) ListChatSessions(context.Context, *ListChatSessionsRequest) (*ListChatSessionsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListChatSessions not implemented")
+}
+func (UnimplementedAIServiceServer) GetLLMConfig(context.Context, *GetLLMConfigRequest) (*GetLLMConfigResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetLLMConfig not implemented")
+}
+func (UnimplementedAIServiceServer) GetSystemPrompt(context.Context, *GetSystemPromptRequest) (*GetSystemPromptResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSystemPrompt not implemented")
+}
+func (UnimplementedAIServiceServer) UpdateSystemPrompt(context.Context, *UpdateSystemPromptRequest) (*UpdateSystemPromptResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateSystemPrompt not implemented")
+}
+func (UnimplementedAIServiceServer) Health(context.Context, *HealthRequest) (*HealthResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Health not implemented")
 }
 func (UnimplementedAIServiceServer) mustEmbedUnimplementedAIServiceServer() {}
 func (UnimplementedAIServiceServer) testEmbeddedByValue()                   {}
@@ -104,6 +216,132 @@ func _AIService_Chat_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AIService_GetChatHistory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetChatHistoryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AIServiceServer).GetChatHistory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AIService_GetChatHistory_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AIServiceServer).GetChatHistory(ctx, req.(*GetChatHistoryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AIService_ClearChatHistory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ClearChatHistoryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AIServiceServer).ClearChatHistory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AIService_ClearChatHistory_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AIServiceServer).ClearChatHistory(ctx, req.(*ClearChatHistoryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AIService_ListChatSessions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListChatSessionsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AIServiceServer).ListChatSessions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AIService_ListChatSessions_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AIServiceServer).ListChatSessions(ctx, req.(*ListChatSessionsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AIService_GetLLMConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetLLMConfigRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AIServiceServer).GetLLMConfig(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AIService_GetLLMConfig_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AIServiceServer).GetLLMConfig(ctx, req.(*GetLLMConfigRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AIService_GetSystemPrompt_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetSystemPromptRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AIServiceServer).GetSystemPrompt(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AIService_GetSystemPrompt_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AIServiceServer).GetSystemPrompt(ctx, req.(*GetSystemPromptRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AIService_UpdateSystemPrompt_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateSystemPromptRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AIServiceServer).UpdateSystemPrompt(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AIService_UpdateSystemPrompt_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AIServiceServer).UpdateSystemPrompt(ctx, req.(*UpdateSystemPromptRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AIService_Health_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HealthRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AIServiceServer).Health(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AIService_Health_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AIServiceServer).Health(ctx, req.(*HealthRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AIService_ServiceDesc is the grpc.ServiceDesc for AIService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -114,6 +352,34 @@ var AIService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Chat",
 			Handler:    _AIService_Chat_Handler,
+		},
+		{
+			MethodName: "GetChatHistory",
+			Handler:    _AIService_GetChatHistory_Handler,
+		},
+		{
+			MethodName: "ClearChatHistory",
+			Handler:    _AIService_ClearChatHistory_Handler,
+		},
+		{
+			MethodName: "ListChatSessions",
+			Handler:    _AIService_ListChatSessions_Handler,
+		},
+		{
+			MethodName: "GetLLMConfig",
+			Handler:    _AIService_GetLLMConfig_Handler,
+		},
+		{
+			MethodName: "GetSystemPrompt",
+			Handler:    _AIService_GetSystemPrompt_Handler,
+		},
+		{
+			MethodName: "UpdateSystemPrompt",
+			Handler:    _AIService_UpdateSystemPrompt_Handler,
+		},
+		{
+			MethodName: "Health",
+			Handler:    _AIService_Health_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

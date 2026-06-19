@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package subscription.v1;
 
-option go_package = "rageai/proto/gen/go/subscription/v1;subscriptionv1";
+option go_package = "agrobot/proto/gen/go/subscription/v1;subscriptionv1";
 
 service SubscriptionService {
   rpc GetSubscriptionByUserId(GetSubscriptionByUserIdRequest) returns (GetSubscriptionByUserIdResponse);

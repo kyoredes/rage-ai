@@ -3,10 +3,10 @@ import logging
 from langchain_litellm import ChatLiteLLM
 
 from config.llm import litellm_settings
-from config.prompts import ASSISTANT_SYSTEM_PROMPT
 from config.settings import settings
 from llm.history.messages import to_langchain_messages
 from llm.history.store import ChatHistoryStore
+from llm.prompt.store import SystemPromptStore
 from utils.response import is_invalid_llm_response
 
 logger = logging.getLogger(__name__)
@@ -41,8 +41,9 @@ class LiteLLMManager:
         await self.history.append("user", prompt)
 
         try:
+            system_prompt = await SystemPromptStore().get_effective(for_g4f=False)
             messages = to_langchain_messages(
-                ASSISTANT_SYSTEM_PROMPT,
+                system_prompt,
                 await self.history.load(),
             )
             response = await self.llm.ainvoke(messages)

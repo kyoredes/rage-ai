@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package auth.v1;
 
-option go_package = "rageai/proto/gen/go/auth/v1;authv1";
+option go_package = "agrobot/proto/gen/go/auth/v1;authv1";
 
 service AuthService {
   rpc StartTelegram(StartTelegramRequest) returns (StartTelegramResponse);

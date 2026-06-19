@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"net"
 
-	authv1 "rageai/proto/gen/go/auth/v1"
+	authv1 "agrobot/proto/gen/go/auth/v1"
 
 	"go.uber.org/zap"
 	"google.golang.org/grpc"

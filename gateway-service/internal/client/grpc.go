@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"gateway/internal/config"
 
-	aiv1 "rageai/proto/gen/go/ai/v1"
-	authv1 "rageai/proto/gen/go/auth/v1"
-	subscriptionv1 "rageai/proto/gen/go/subscription/v1"
+	aiv1 "agrobot/proto/gen/go/ai/v1"
+	authv1 "agrobot/proto/gen/go/auth/v1"
+	subscriptionv1 "agrobot/proto/gen/go/subscription/v1"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"

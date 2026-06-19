@@ -1,7 +1,7 @@
 services:
   auth-db:
     image: postgres:16-alpine
-    container_name: rageai-auth-db
+    container_name: agrobot-auth-db
     restart: unless-stopped
     environment:
       POSTGRES_USER: postgres
@@ -17,7 +17,7 @@ services:
 
   sub-db:
     image: postgres:16-alpine
-    container_name: rageai-sub-db
+    container_name: agrobot-sub-db
     restart: unless-stopped
     environment:
       POSTGRES_USER: postgres
@@ -33,7 +33,7 @@ services:
 
   redis:
     image: redis:7-alpine
-    container_name: rageai-redis
+    container_name: agrobot-redis
     restart: unless-stopped
     command: ["redis-server", "--appendonly", "yes"]
     volumes:
@@ -48,7 +48,7 @@ services:
     build:
       context: ..
       dockerfile: auth-service/Dockerfile
-    container_name: rageai-auth-service
+    container_name: agrobot-auth-service
     restart: unless-stopped
     environment:
       LOGGING_MODE: text
@@ -79,7 +79,7 @@ services:
     build:
       context: ..
       dockerfile: subscription-service/Dockerfile
-    container_name: rageai-subscription-service
+    container_name: agrobot-subscription-service
     restart: unless-stopped
     environment:
       LOGGING_MODE: text
@@ -101,7 +101,7 @@ services:
     build:
       context: ..
       dockerfile: gateway-service/Dockerfile
-    container_name: rageai-gateway-service
+    container_name: agrobot-gateway-service
     restart: unless-stopped
     environment:
       HOST: 0.0.0.0
@@ -116,6 +116,10 @@ services:
       AI_HOST: ai-service
       AI_GRPC_PORT: 50053
       COMMON_PUB_KEY: ${COMMON_PUB_KEY:-secret}
+      ADMIN_USERNAME: ${ADMIN_USERNAME:-admin}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-changeme}
+      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET:-admin-jwt-secret-change-in-prod}
+      ADMIN_CORS_ORIGIN: ${ADMIN_CORS_ORIGIN:-http://localhost:3000}
     depends_on:
       - auth-service
       - subscription-service
@@ -127,7 +131,7 @@ services:
     build:
       context: ..
       dockerfile: ai-service/Dockerfile
-    container_name: rageai-ai-service
+    container_name: agrobot-ai-service
     restart: unless-stopped
     environment:
       DEBUG: ${AI_DEBUG:-true}
@@ -157,7 +161,7 @@ services:
     build:
       context: ..
       dockerfile: aiogram-service/Dockerfile
-    container_name: rageai-aiogram-service
+    container_name: agrobot-aiogram-service
     restart: unless-stopped
     environment:
       BOT_TOKEN: ${BOT_TOKEN}
@@ -165,6 +169,17 @@ services:
       GATEWAY_PORT: 8000
       COMMON_PUB_KEY: ${COMMON_PUB_KEY:-secret}
       LOG_LEVEL: ${LOG_LEVEL:-INFO}
+    depends_on:
+      - gateway-service
+
+  admin-panel:
+    build:
+      context: ..
+      dockerfile: admin-panel/Dockerfile
+    container_name: agrobot-admin-panel
+    restart: unless-stopped
+    ports:
+      - "3000:80"
     depends_on:
       - gateway-service
 

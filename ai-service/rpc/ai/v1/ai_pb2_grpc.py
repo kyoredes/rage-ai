@@ -39,12 +39,89 @@ class AIServiceStub:
                 request_serializer=ai_dot_v1_dot_ai__pb2.ChatRequest.SerializeToString,
                 response_deserializer=ai_dot_v1_dot_ai__pb2.ChatResponse.FromString,
                 _registered_method=True)
+        self.GetChatHistory = channel.unary_unary(
+                '/ai.v1.AIService/GetChatHistory',
+                request_serializer=ai_dot_v1_dot_ai__pb2.GetChatHistoryRequest.SerializeToString,
+                response_deserializer=ai_dot_v1_dot_ai__pb2.GetChatHistoryResponse.FromString,
+                _registered_method=True)
+        self.ClearChatHistory = channel.unary_unary(
+                '/ai.v1.AIService/ClearChatHistory',
+                request_serializer=ai_dot_v1_dot_ai__pb2.ClearChatHistoryRequest.SerializeToString,
+                response_deserializer=ai_dot_v1_dot_ai__pb2.ClearChatHistoryResponse.FromString,
+                _registered_method=True)
+        self.ListChatSessions = channel.unary_unary(
+                '/ai.v1.AIService/ListChatSessions',
+                request_serializer=ai_dot_v1_dot_ai__pb2.ListChatSessionsRequest.SerializeToString,
+                response_deserializer=ai_dot_v1_dot_ai__pb2.ListChatSessionsResponse.FromString,
+                _registered_method=True)
+        self.GetLLMConfig = channel.unary_unary(
+                '/ai.v1.AIService/GetLLMConfig',
+                request_serializer=ai_dot_v1_dot_ai__pb2.GetLLMConfigRequest.SerializeToString,
+                response_deserializer=ai_dot_v1_dot_ai__pb2.GetLLMConfigResponse.FromString,
+                _registered_method=True)
+        self.GetSystemPrompt = channel.unary_unary(
+                '/ai.v1.AIService/GetSystemPrompt',
+                request_serializer=ai_dot_v1_dot_ai__pb2.GetSystemPromptRequest.SerializeToString,
+                response_deserializer=ai_dot_v1_dot_ai__pb2.GetSystemPromptResponse.FromString,
+                _registered_method=True)
+        self.UpdateSystemPrompt = channel.unary_unary(
+                '/ai.v1.AIService/UpdateSystemPrompt',
+                request_serializer=ai_dot_v1_dot_ai__pb2.UpdateSystemPromptRequest.SerializeToString,
+                response_deserializer=ai_dot_v1_dot_ai__pb2.UpdateSystemPromptResponse.FromString,
+                _registered_method=True)
+        self.Health = channel.unary_unary(
+                '/ai.v1.AIService/Health',
+                request_serializer=ai_dot_v1_dot_ai__pb2.HealthRequest.SerializeToString,
+                response_deserializer=ai_dot_v1_dot_ai__pb2.HealthResponse.FromString,
+                _registered_method=True)
 
 
 class AIServiceServicer:
     """Missing associated documentation comment in .proto file."""
 
     def Chat(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetChatHistory(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ClearChatHistory(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ListChatSessions(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetLLMConfig(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetSystemPrompt(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def UpdateSystemPrompt(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Health(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -57,6 +134,41 @@ def add_AIServiceServicer_to_server(servicer, server):
                     servicer.Chat,
                     request_deserializer=ai_dot_v1_dot_ai__pb2.ChatRequest.FromString,
                     response_serializer=ai_dot_v1_dot_ai__pb2.ChatResponse.SerializeToString,
+            ),
+            'GetChatHistory': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetChatHistory,
+                    request_deserializer=ai_dot_v1_dot_ai__pb2.GetChatHistoryRequest.FromString,
+                    response_serializer=ai_dot_v1_dot_ai__pb2.GetChatHistoryResponse.SerializeToString,
+            ),
+            'ClearChatHistory': grpc.unary_unary_rpc_method_handler(
+                    servicer.ClearChatHistory,
+                    request_deserializer=ai_dot_v1_dot_ai__pb2.ClearChatHistoryRequest.FromString,
+                    response_serializer=ai_dot_v1_dot_ai__pb2.ClearChatHistoryResponse.SerializeToString,
+            ),
+            'ListChatSessions': grpc.unary_unary_rpc_method_handler(
+                    servicer.ListChatSessions,
+                    request_deserializer=ai_dot_v1_dot_ai__pb2.ListChatSessionsRequest.FromString,
+                    response_serializer=ai_dot_v1_dot_ai__pb2.ListChatSessionsResponse.SerializeToString,
+            ),
+            'GetLLMConfig': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetLLMConfig,
+                    request_deserializer=ai_dot_v1_dot_ai__pb2.GetLLMConfigRequest.FromString,
+                    response_serializer=ai_dot_v1_dot_ai__pb2.GetLLMConfigResponse.SerializeToString,
+            ),
+            'GetSystemPrompt': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetSystemPrompt,
+                    request_deserializer=ai_dot_v1_dot_ai__pb2.GetSystemPromptRequest.FromString,
+                    response_serializer=ai_dot_v1_dot_ai__pb2.GetSystemPromptResponse.SerializeToString,
+            ),
+            'UpdateSystemPrompt': grpc.unary_unary_rpc_method_handler(
+                    servicer.UpdateSystemPrompt,
+                    request_deserializer=ai_dot_v1_dot_ai__pb2.UpdateSystemPromptRequest.FromString,
+                    response_serializer=ai_dot_v1_dot_ai__pb2.UpdateSystemPromptResponse.SerializeToString,
+            ),
+            'Health': grpc.unary_unary_rpc_method_handler(
+                    servicer.Health,
+                    request_deserializer=ai_dot_v1_dot_ai__pb2.HealthRequest.FromString,
+                    response_serializer=ai_dot_v1_dot_ai__pb2.HealthResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -86,6 +198,195 @@ class AIService:
             '/ai.v1.AIService/Chat',
             ai_dot_v1_dot_ai__pb2.ChatRequest.SerializeToString,
             ai_dot_v1_dot_ai__pb2.ChatResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetChatHistory(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/ai.v1.AIService/GetChatHistory',
+            ai_dot_v1_dot_ai__pb2.GetChatHistoryRequest.SerializeToString,
+            ai_dot_v1_dot_ai__pb2.GetChatHistoryResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def ClearChatHistory(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/ai.v1.AIService/ClearChatHistory',
+            ai_dot_v1_dot_ai__pb2.ClearChatHistoryRequest.SerializeToString,
+            ai_dot_v1_dot_ai__pb2.ClearChatHistoryResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def ListChatSessions(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/ai.v1.AIService/ListChatSessions',
+            ai_dot_v1_dot_ai__pb2.ListChatSessionsRequest.SerializeToString,
+            ai_dot_v1_dot_ai__pb2.ListChatSessionsResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetLLMConfig(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/ai.v1.AIService/GetLLMConfig',
+            ai_dot_v1_dot_ai__pb2.GetLLMConfigRequest.SerializeToString,
+            ai_dot_v1_dot_ai__pb2.GetLLMConfigResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetSystemPrompt(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/ai.v1.AIService/GetSystemPrompt',
+            ai_dot_v1_dot_ai__pb2.GetSystemPromptRequest.SerializeToString,
+            ai_dot_v1_dot_ai__pb2.GetSystemPromptResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def UpdateSystemPrompt(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/ai.v1.AIService/UpdateSystemPrompt',
+            ai_dot_v1_dot_ai__pb2.UpdateSystemPromptRequest.SerializeToString,
+            ai_dot_v1_dot_ai__pb2.UpdateSystemPromptResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def Health(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/ai.v1.AIService/Health',
+            ai_dot_v1_dot_ai__pb2.HealthRequest.SerializeToString,
+            ai_dot_v1_dot_ai__pb2.HealthResponse.FromString,
             options,
             channel_credentials,
             insecure,

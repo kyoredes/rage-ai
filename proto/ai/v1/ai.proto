@@ -2,10 +2,17 @@ syntax = "proto3";
 
 package ai.v1;
 
-option go_package = "rageai/proto/gen/go/ai/v1;aiv1";
+option go_package = "agrobot/proto/gen/go/ai/v1;aiv1";
 
 service AIService {
   rpc Chat(ChatRequest) returns (ChatResponse);
+  rpc GetChatHistory(GetChatHistoryRequest) returns (GetChatHistoryResponse);
+  rpc ClearChatHistory(ClearChatHistoryRequest) returns (ClearChatHistoryResponse);
+  rpc ListChatSessions(ListChatSessionsRequest) returns (ListChatSessionsResponse);
+  rpc GetLLMConfig(GetLLMConfigRequest) returns (GetLLMConfigResponse);
+  rpc GetSystemPrompt(GetSystemPromptRequest) returns (GetSystemPromptResponse);
+  rpc UpdateSystemPrompt(UpdateSystemPromptRequest) returns (UpdateSystemPromptResponse);
+  rpc Health(HealthRequest) returns (HealthResponse);
 }
 
 message ChatRequest {
@@ -16,4 +23,77 @@ message ChatRequest {
 message ChatResponse {
   string telegram_id = 1;
   string response = 2;
+}
+
+message ChatMessage {
+  string role = 1;
+  string content = 2;
+}
+
+message GetChatHistoryRequest {
+  string telegram_id = 1;
+}
+
+message GetChatHistoryResponse {
+  string telegram_id = 1;
+  repeated ChatMessage messages = 2;
+}
+
+message ClearChatHistoryRequest {
+  string telegram_id = 1;
+}
+
+message ClearChatHistoryResponse {}
+
+message ListChatSessionsRequest {
+  int32 page = 1;
+  int32 limit = 2;
+}
+
+message ChatSessionItem {
+  string telegram_id = 1;
+  int32 message_count = 2;
+}
+
+message ListChatSessionsResponse {
+  repeated ChatSessionItem sessions = 1;
+  int32 total = 2;
+}
+
+message GetLLMConfigRequest {}
+
+message GetLLMConfigResponse {
+  string model = 1;
+  double temperature = 2;
+  int32 max_tokens = 3;
+  bool debug = 4;
+  string provider = 5;
+  repeated string g4f_models = 6;
+  bool uses_litellm = 7;
+}
+
+message GetSystemPromptRequest {}
+
+message GetSystemPromptResponse {
+  string prompt = 1;
+  string default_prompt = 2;
+  bool is_custom = 3;
+}
+
+message UpdateSystemPromptRequest {
+  string prompt = 1;
+}
+
+message UpdateSystemPromptResponse {
+  string prompt = 1;
+  string default_prompt = 2;
+  bool is_custom = 3;
+}
+
+message HealthRequest {}
+
+message HealthResponse {
+  bool ok = 1;
+  bool db_ok = 2;
+  bool redis_ok = 3;
 }

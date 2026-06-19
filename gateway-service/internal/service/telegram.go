@@ -9,9 +9,9 @@ import (
 	"gateway/internal/logging"
 	"time"
 
-	authv1 "rageai/proto/gen/go/auth/v1"
-	aiv1 "rageai/proto/gen/go/ai/v1"
-	subscriptionv1 "rageai/proto/gen/go/subscription/v1"
+	authv1 "agrobot/proto/gen/go/auth/v1"
+	aiv1 "agrobot/proto/gen/go/ai/v1"
+	subscriptionv1 "agrobot/proto/gen/go/subscription/v1"
 
 	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"

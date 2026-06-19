@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package ai.v1;
 
-option go_package = "rageai/proto/gen/go/ai/v1;aiv1";
+option go_package = "agrobot/proto/gen/go/ai/v1;aiv1";
 
 service AIService {
   rpc Chat(ChatRequest) returns (ChatResponse);

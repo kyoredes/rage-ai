@@ -1,8 +1,8 @@
 {
   "info": {
-    "_postman_id": "rageai-collection",
-    "name": "RageAI",
-    "description": "Запросы ко всем микросервисам RageAI.\n\nHTTP: gateway-service (порт 8000)\ngRPC: auth-service (50051), subscription-service (50052)\n\nДля gRPC-запросов в Postman импортируй proto-файлы из папки `postman/proto/`.",
+    "_postman_id": "agrobot-collection",
+    "name": "Agrobot",
+    "description": "Запросы ко всем микросервисам Agrobot.\n\nHTTP: gateway-service (порт 8000)\ngRPC: auth-service (50051), subscription-service (50052)\n\nДля gRPC-запросов в Postman импортируй proto-файлы из папки `postman/proto/`.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [

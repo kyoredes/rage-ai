@@ -33,6 +33,7 @@ func main() {
 	subConfig := config.NewSubConfig()
 	aiConfig := config.NewAIConfig()
 	devConfig := config.NewDevConfig()
+	adminConfig := config.NewAdminConfig()
 
 	if err := logging.InitLogger(cfg.LoggingMode); err != nil {
 		fmt.Println(err)
@@ -52,10 +53,17 @@ func main() {
 		grpcClients,
 		time.Duration(authConfig.AuthTimeout)*time.Second,
 	)
+	adminService := service.NewAdminService(
+		grpcClients,
+		adminConfig,
+		time.Duration(authConfig.AuthTimeout)*time.Second,
+	)
 
-	h := handler.NewHandler(telegramService)
+	h := handler.NewHandler(telegramService, adminService)
 	serverAuthMiddleware := middleware.DevAuthMiddleware(devConfig)
-	router := router.SetupRouter(h, serverAuthMiddleware)
+	adminAuthMiddleware := middleware.AdminAuthMiddleware(adminService)
+	corsMiddleware := middleware.CORSMiddleware(adminConfig.CORSOrigin)
+	router := router.SetupRouter(h, serverAuthMiddleware, adminAuthMiddleware, corsMiddleware)
 
 	srv, err := server.NewServer(cfg, router)
 	if err != nil {

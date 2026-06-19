@@ -125,6 +125,814 @@ func (x *ChatResponse) GetResponse() string {
 	return ""
 }
 
+type ChatMessage struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Role          string                 `protobuf:"bytes,1,opt,name=role,proto3" json:"role,omitempty"`
+	Content       string                 `protobuf:"bytes,2,opt,name=content,proto3" json:"content,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ChatMessage) Reset() {
+	*x = ChatMessage{}
+	mi := &file_ai_v1_ai_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ChatMessage) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ChatMessage) ProtoMessage() {}
+
+func (x *ChatMessage) ProtoReflect() protoreflect.Message {
+	mi := &file_ai_v1_ai_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ChatMessage.ProtoReflect.Descriptor instead.
+func (*ChatMessage) Descriptor() ([]byte, []int) {
+	return file_ai_v1_ai_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *ChatMessage) GetRole() string {
+	if x != nil {
+		return x.Role
+	}
+	return ""
+}
+
+func (x *ChatMessage) GetContent() string {
+	if x != nil {
+		return x.Content
+	}
+	return ""
+}
+
+type GetChatHistoryRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TelegramId    string                 `protobuf:"bytes,1,opt,name=telegram_id,json=telegramId,proto3" json:"telegram_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetChatHistoryRequest) Reset() {
+	*x = GetChatHistoryRequest{}
+	mi := &file_ai_v1_ai_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetChatHistoryRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetChatHistoryRequest) ProtoMessage() {}
+
+func (x *GetChatHistoryRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_ai_v1_ai_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetChatHistoryRequest.ProtoReflect.Descriptor instead.
+func (*GetChatHistoryRequest) Descriptor() ([]byte, []int) {
+	return file_ai_v1_ai_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *GetChatHistoryRequest) GetTelegramId() string {
+	if x != nil {
+		return x.TelegramId
+	}
+	return ""
+}
+
+type GetChatHistoryResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TelegramId    string                 `protobuf:"bytes,1,opt,name=telegram_id,json=telegramId,proto3" json:"telegram_id,omitempty"`
+	Messages      []*ChatMessage         `protobuf:"bytes,2,rep,name=messages,proto3" json:"messages,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetChatHistoryResponse) Reset() {
+	*x = GetChatHistoryResponse{}
+	mi := &file_ai_v1_ai_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetChatHistoryResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetChatHistoryResponse) ProtoMessage() {}
+
+func (x *GetChatHistoryResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_ai_v1_ai_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetChatHistoryResponse.ProtoReflect.Descriptor instead.
+func (*GetChatHistoryResponse) Descriptor() ([]byte, []int) {
+	return file_ai_v1_ai_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *GetChatHistoryResponse) GetTelegramId() string {
+	if x != nil {
+		return x.TelegramId
+	}
+	return ""
+}
+
+func (x *GetChatHistoryResponse) GetMessages() []*ChatMessage {
+	if x != nil {
+		return x.Messages
+	}
+	return nil
+}
+
+type ClearChatHistoryRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TelegramId    string                 `protobuf:"bytes,1,opt,name=telegram_id,json=telegramId,proto3" json:"telegram_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ClearChatHistoryRequest) Reset() {
+	*x = ClearChatHistoryRequest{}
+	mi := &file_ai_v1_ai_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ClearChatHistoryRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ClearChatHistoryRequest) ProtoMessage() {}
+
+func (x *ClearChatHistoryRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_ai_v1_ai_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ClearChatHistoryRequest.ProtoReflect.Descriptor instead.
+func (*ClearChatHistoryRequest) Descriptor() ([]byte, []int) {
+	return file_ai_v1_ai_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *ClearChatHistoryRequest) GetTelegramId() string {
+	if x != nil {
+		return x.TelegramId
+	}
+	return ""
+}
+
+type ClearChatHistoryResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ClearChatHistoryResponse) Reset() {
+	*x = ClearChatHistoryResponse{}
+	mi := &file_ai_v1_ai_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ClearChatHistoryResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ClearChatHistoryResponse) ProtoMessage() {}
+
+func (x *ClearChatHistoryResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_ai_v1_ai_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ClearChatHistoryResponse.ProtoReflect.Descriptor instead.
+func (*ClearChatHistoryResponse) Descriptor() ([]byte, []int) {
+	return file_ai_v1_ai_proto_rawDescGZIP(), []int{6}
+}
+
+type ListChatSessionsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Page          int32                  `protobuf:"varint,1,opt,name=page,proto3" json:"page,omitempty"`
+	Limit         int32                  `protobuf:"varint,2,opt,name=limit,proto3" json:"limit,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListChatSessionsRequest) Reset() {
+	*x = ListChatSessionsRequest{}
+	mi := &file_ai_v1_ai_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListChatSessionsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListChatSessionsRequest) ProtoMessage() {}
+
+func (x *ListChatSessionsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_ai_v1_ai_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListChatSessionsRequest.ProtoReflect.Descriptor instead.
+func (*ListChatSessionsRequest) Descriptor() ([]byte, []int) {
+	return file_ai_v1_ai_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *ListChatSessionsRequest) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *ListChatSessionsRequest) GetLimit() int32 {
+	if x != nil {
+		return x.Limit
+	}
+	return 0
+}
+
+type ChatSessionItem struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TelegramId    string                 `protobuf:"bytes,1,opt,name=telegram_id,json=telegramId,proto3" json:"telegram_id,omitempty"`
+	MessageCount  int32                  `protobuf:"varint,2,opt,name=message_count,json=messageCount,proto3" json:"message_count,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ChatSessionItem) Reset() {
+	*x = ChatSessionItem{}
+	mi := &file_ai_v1_ai_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ChatSessionItem) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ChatSessionItem) ProtoMessage() {}
+
+func (x *ChatSessionItem) ProtoReflect() protoreflect.Message {
+	mi := &file_ai_v1_ai_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ChatSessionItem.ProtoReflect.Descriptor instead.
+func (*ChatSessionItem) Descriptor() ([]byte, []int) {
+	return file_ai_v1_ai_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *ChatSessionItem) GetTelegramId() string {
+	if x != nil {
+		return x.TelegramId
+	}
+	return ""
+}
+
+func (x *ChatSessionItem) GetMessageCount() int32 {
+	if x != nil {
+		return x.MessageCount
+	}
+	return 0
+}
+
+type ListChatSessionsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Sessions      []*ChatSessionItem     `protobuf:"bytes,1,rep,name=sessions,proto3" json:"sessions,omitempty"`
+	Total         int32                  `protobuf:"varint,2,opt,name=total,proto3" json:"total,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListChatSessionsResponse) Reset() {
+	*x = ListChatSessionsResponse{}
+	mi := &file_ai_v1_ai_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListChatSessionsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListChatSessionsResponse) ProtoMessage() {}
+
+func (x *ListChatSessionsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_ai_v1_ai_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListChatSessionsResponse.ProtoReflect.Descriptor instead.
+func (*ListChatSessionsResponse) Descriptor() ([]byte, []int) {
+	return file_ai_v1_ai_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *ListChatSessionsResponse) GetSessions() []*ChatSessionItem {
+	if x != nil {
+		return x.Sessions
+	}
+	return nil
+}
+
+func (x *ListChatSessionsResponse) GetTotal() int32 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
+type GetLLMConfigRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetLLMConfigRequest) Reset() {
+	*x = GetLLMConfigRequest{}
+	mi := &file_ai_v1_ai_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetLLMConfigRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetLLMConfigRequest) ProtoMessage() {}
+
+func (x *GetLLMConfigRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_ai_v1_ai_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetLLMConfigRequest.ProtoReflect.Descriptor instead.
+func (*GetLLMConfigRequest) Descriptor() ([]byte, []int) {
+	return file_ai_v1_ai_proto_rawDescGZIP(), []int{10}
+}
+
+type GetLLMConfigResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Model         string                 `protobuf:"bytes,1,opt,name=model,proto3" json:"model,omitempty"`
+	Temperature   float64                `protobuf:"fixed64,2,opt,name=temperature,proto3" json:"temperature,omitempty"`
+	MaxTokens     int32                  `protobuf:"varint,3,opt,name=max_tokens,json=maxTokens,proto3" json:"max_tokens,omitempty"`
+	Debug         bool                   `protobuf:"varint,4,opt,name=debug,proto3" json:"debug,omitempty"`
+	Provider      string                 `protobuf:"bytes,5,opt,name=provider,proto3" json:"provider,omitempty"`
+	G4FModels     []string               `protobuf:"bytes,6,rep,name=g4f_models,json=g4fModels,proto3" json:"g4f_models,omitempty"`
+	UsesLitellm   bool                   `protobuf:"varint,7,opt,name=uses_litellm,json=usesLitellm,proto3" json:"uses_litellm,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetLLMConfigResponse) Reset() {
+	*x = GetLLMConfigResponse{}
+	mi := &file_ai_v1_ai_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetLLMConfigResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetLLMConfigResponse) ProtoMessage() {}
+
+func (x *GetLLMConfigResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_ai_v1_ai_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetLLMConfigResponse.ProtoReflect.Descriptor instead.
+func (*GetLLMConfigResponse) Descriptor() ([]byte, []int) {
+	return file_ai_v1_ai_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *GetLLMConfigResponse) GetModel() string {
+	if x != nil {
+		return x.Model
+	}
+	return ""
+}
+
+func (x *GetLLMConfigResponse) GetTemperature() float64 {
+	if x != nil {
+		return x.Temperature
+	}
+	return 0
+}
+
+func (x *GetLLMConfigResponse) GetMaxTokens() int32 {
+	if x != nil {
+		return x.MaxTokens
+	}
+	return 0
+}
+
+func (x *GetLLMConfigResponse) GetDebug() bool {
+	if x != nil {
+		return x.Debug
+	}
+	return false
+}
+
+func (x *GetLLMConfigResponse) GetProvider() string {
+	if x != nil {
+		return x.Provider
+	}
+	return ""
+}
+
+func (x *GetLLMConfigResponse) GetG4FModels() []string {
+	if x != nil {
+		return x.G4FModels
+	}
+	return nil
+}
+
+func (x *GetLLMConfigResponse) GetUsesLitellm() bool {
+	if x != nil {
+		return x.UsesLitellm
+	}
+	return false
+}
+
+type GetSystemPromptRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetSystemPromptRequest) Reset() {
+	*x = GetSystemPromptRequest{}
+	mi := &file_ai_v1_ai_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetSystemPromptRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSystemPromptRequest) ProtoMessage() {}
+
+func (x *GetSystemPromptRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_ai_v1_ai_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSystemPromptRequest.ProtoReflect.Descriptor instead.
+func (*GetSystemPromptRequest) Descriptor() ([]byte, []int) {
+	return file_ai_v1_ai_proto_rawDescGZIP(), []int{12}
+}
+
+type GetSystemPromptResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Prompt        string                 `protobuf:"bytes,1,opt,name=prompt,proto3" json:"prompt,omitempty"`
+	DefaultPrompt string                 `protobuf:"bytes,2,opt,name=default_prompt,json=defaultPrompt,proto3" json:"default_prompt,omitempty"`
+	IsCustom      bool                   `protobuf:"varint,3,opt,name=is_custom,json=isCustom,proto3" json:"is_custom,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetSystemPromptResponse) Reset() {
+	*x = GetSystemPromptResponse{}
+	mi := &file_ai_v1_ai_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetSystemPromptResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSystemPromptResponse) ProtoMessage() {}
+
+func (x *GetSystemPromptResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_ai_v1_ai_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSystemPromptResponse.ProtoReflect.Descriptor instead.
+func (*GetSystemPromptResponse) Descriptor() ([]byte, []int) {
+	return file_ai_v1_ai_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *GetSystemPromptResponse) GetPrompt() string {
+	if x != nil {
+		return x.Prompt
+	}
+	return ""
+}
+
+func (x *GetSystemPromptResponse) GetDefaultPrompt() string {
+	if x != nil {
+		return x.DefaultPrompt
+	}
+	return ""
+}
+
+func (x *GetSystemPromptResponse) GetIsCustom() bool {
+	if x != nil {
+		return x.IsCustom
+	}
+	return false
+}
+
+type UpdateSystemPromptRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Prompt        string                 `protobuf:"bytes,1,opt,name=prompt,proto3" json:"prompt,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateSystemPromptRequest) Reset() {
+	*x = UpdateSystemPromptRequest{}
+	mi := &file_ai_v1_ai_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateSystemPromptRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateSystemPromptRequest) ProtoMessage() {}
+
+func (x *UpdateSystemPromptRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_ai_v1_ai_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateSystemPromptRequest.ProtoReflect.Descriptor instead.
+func (*UpdateSystemPromptRequest) Descriptor() ([]byte, []int) {
+	return file_ai_v1_ai_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *UpdateSystemPromptRequest) GetPrompt() string {
+	if x != nil {
+		return x.Prompt
+	}
+	return ""
+}
+
+type UpdateSystemPromptResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Prompt        string                 `protobuf:"bytes,1,opt,name=prompt,proto3" json:"prompt,omitempty"`
+	DefaultPrompt string                 `protobuf:"bytes,2,opt,name=default_prompt,json=defaultPrompt,proto3" json:"default_prompt,omitempty"`
+	IsCustom      bool                   `protobuf:"varint,3,opt,name=is_custom,json=isCustom,proto3" json:"is_custom,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateSystemPromptResponse) Reset() {
+	*x = UpdateSystemPromptResponse{}
+	mi := &file_ai_v1_ai_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateSystemPromptResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateSystemPromptResponse) ProtoMessage() {}
+
+func (x *UpdateSystemPromptResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_ai_v1_ai_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateSystemPromptResponse.ProtoReflect.Descriptor instead.
+func (*UpdateSystemPromptResponse) Descriptor() ([]byte, []int) {
+	return file_ai_v1_ai_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *UpdateSystemPromptResponse) GetPrompt() string {
+	if x != nil {
+		return x.Prompt
+	}
+	return ""
+}
+
+func (x *UpdateSystemPromptResponse) GetDefaultPrompt() string {
+	if x != nil {
+		return x.DefaultPrompt
+	}
+	return ""
+}
+
+func (x *UpdateSystemPromptResponse) GetIsCustom() bool {
+	if x != nil {
+		return x.IsCustom
+	}
+	return false
+}
+
+type HealthRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *HealthRequest) Reset() {
+	*x = HealthRequest{}
+	mi := &file_ai_v1_ai_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *HealthRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*HealthRequest) ProtoMessage() {}
+
+func (x *HealthRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_ai_v1_ai_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use HealthRequest.ProtoReflect.Descriptor instead.
+func (*HealthRequest) Descriptor() ([]byte, []int) {
+	return file_ai_v1_ai_proto_rawDescGZIP(), []int{16}
+}
+
+type HealthResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Ok            bool                   `protobuf:"varint,1,opt,name=ok,proto3" json:"ok,omitempty"`
+	DbOk          bool                   `protobuf:"varint,2,opt,name=db_ok,json=dbOk,proto3" json:"db_ok,omitempty"`
+	RedisOk       bool                   `protobuf:"varint,3,opt,name=redis_ok,json=redisOk,proto3" json:"redis_ok,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *HealthResponse) Reset() {
+	*x = HealthResponse{}
+	mi := &file_ai_v1_ai_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *HealthResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*HealthResponse) ProtoMessage() {}
+
+func (x *HealthResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_ai_v1_ai_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use HealthResponse.ProtoReflect.Descriptor instead.
+func (*HealthResponse) Descriptor() ([]byte, []int) {
+	return file_ai_v1_ai_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *HealthResponse) GetOk() bool {
+	if x != nil {
+		return x.Ok
+	}
+	return false
+}
+
+func (x *HealthResponse) GetDbOk() bool {
+	if x != nil {
+		return x.DbOk
+	}
+	return false
+}
+
+func (x *HealthResponse) GetRedisOk() bool {
+	if x != nil {
+		return x.RedisOk
+	}
+	return false
+}
+
 var File_ai_v1_ai_proto protoreflect.FileDescriptor
 
 const file_ai_v1_ai_proto_rawDesc = "" +
@@ -137,9 +945,67 @@ const file_ai_v1_ai_proto_rawDesc = "" +
 	"\fChatResponse\x12\x1f\n" +
 	"\vtelegram_id\x18\x01 \x01(\tR\n" +
 	"telegramId\x12\x1a\n" +
-	"\bresponse\x18\x02 \x01(\tR\bresponse2<\n" +
+	"\bresponse\x18\x02 \x01(\tR\bresponse\";\n" +
+	"\vChatMessage\x12\x12\n" +
+	"\x04role\x18\x01 \x01(\tR\x04role\x12\x18\n" +
+	"\acontent\x18\x02 \x01(\tR\acontent\"8\n" +
+	"\x15GetChatHistoryRequest\x12\x1f\n" +
+	"\vtelegram_id\x18\x01 \x01(\tR\n" +
+	"telegramId\"i\n" +
+	"\x16GetChatHistoryResponse\x12\x1f\n" +
+	"\vtelegram_id\x18\x01 \x01(\tR\n" +
+	"telegramId\x12.\n" +
+	"\bmessages\x18\x02 \x03(\v2\x12.ai.v1.ChatMessageR\bmessages\":\n" +
+	"\x17ClearChatHistoryRequest\x12\x1f\n" +
+	"\vtelegram_id\x18\x01 \x01(\tR\n" +
+	"telegramId\"\x1a\n" +
+	"\x18ClearChatHistoryResponse\"C\n" +
+	"\x17ListChatSessionsRequest\x12\x12\n" +
+	"\x04page\x18\x01 \x01(\x05R\x04page\x12\x14\n" +
+	"\x05limit\x18\x02 \x01(\x05R\x05limit\"W\n" +
+	"\x0fChatSessionItem\x12\x1f\n" +
+	"\vtelegram_id\x18\x01 \x01(\tR\n" +
+	"telegramId\x12#\n" +
+	"\rmessage_count\x18\x02 \x01(\x05R\fmessageCount\"d\n" +
+	"\x18ListChatSessionsResponse\x122\n" +
+	"\bsessions\x18\x01 \x03(\v2\x16.ai.v1.ChatSessionItemR\bsessions\x12\x14\n" +
+	"\x05total\x18\x02 \x01(\x05R\x05total\"\x15\n" +
+	"\x13GetLLMConfigRequest\"\xe1\x01\n" +
+	"\x14GetLLMConfigResponse\x12\x14\n" +
+	"\x05model\x18\x01 \x01(\tR\x05model\x12 \n" +
+	"\vtemperature\x18\x02 \x01(\x01R\vtemperature\x12\x1d\n" +
+	"\n" +
+	"max_tokens\x18\x03 \x01(\x05R\tmaxTokens\x12\x14\n" +
+	"\x05debug\x18\x04 \x01(\bR\x05debug\x12\x1a\n" +
+	"\bprovider\x18\x05 \x01(\tR\bprovider\x12\x1d\n" +
+	"\n" +
+	"g4f_models\x18\x06 \x03(\tR\tg4fModels\x12!\n" +
+	"\fuses_litellm\x18\a \x01(\bR\vusesLitellm\"\x18\n" +
+	"\x16GetSystemPromptRequest\"u\n" +
+	"\x17GetSystemPromptResponse\x12\x16\n" +
+	"\x06prompt\x18\x01 \x01(\tR\x06prompt\x12%\n" +
+	"\x0edefault_prompt\x18\x02 \x01(\tR\rdefaultPrompt\x12\x1b\n" +
+	"\tis_custom\x18\x03 \x01(\bR\bisCustom\"3\n" +
+	"\x19UpdateSystemPromptRequest\x12\x16\n" +
+	"\x06prompt\x18\x01 \x01(\tR\x06prompt\"x\n" +
+	"\x1aUpdateSystemPromptResponse\x12\x16\n" +
+	"\x06prompt\x18\x01 \x01(\tR\x06prompt\x12%\n" +
+	"\x0edefault_prompt\x18\x02 \x01(\tR\rdefaultPrompt\x12\x1b\n" +
+	"\tis_custom\x18\x03 \x01(\bR\bisCustom\"\x0f\n" +
+	"\rHealthRequest\"P\n" +
+	"\x0eHealthResponse\x12\x0e\n" +
+	"\x02ok\x18\x01 \x01(\bR\x02ok\x12\x13\n" +
+	"\x05db_ok\x18\x02 \x01(\bR\x04dbOk\x12\x19\n" +
+	"\bredis_ok\x18\x03 \x01(\bR\aredisOk2\xe2\x04\n" +
 	"\tAIService\x12/\n" +
-	"\x04Chat\x12\x12.ai.v1.ChatRequest\x1a\x13.ai.v1.ChatResponseB Z\x1erageai/proto/gen/go/ai/v1;aiv1b\x06proto3"
+	"\x04Chat\x12\x12.ai.v1.ChatRequest\x1a\x13.ai.v1.ChatResponse\x12M\n" +
+	"\x0eGetChatHistory\x12\x1c.ai.v1.GetChatHistoryRequest\x1a\x1d.ai.v1.GetChatHistoryResponse\x12S\n" +
+	"\x10ClearChatHistory\x12\x1e.ai.v1.ClearChatHistoryRequest\x1a\x1f.ai.v1.ClearChatHistoryResponse\x12S\n" +
+	"\x10ListChatSessions\x12\x1e.ai.v1.ListChatSessionsRequest\x1a\x1f.ai.v1.ListChatSessionsResponse\x12G\n" +
+	"\fGetLLMConfig\x12\x1a.ai.v1.GetLLMConfigRequest\x1a\x1b.ai.v1.GetLLMConfigResponse\x12P\n" +
+	"\x0fGetSystemPrompt\x12\x1d.ai.v1.GetSystemPromptRequest\x1a\x1e.ai.v1.GetSystemPromptResponse\x12Y\n" +
+	"\x12UpdateSystemPrompt\x12 .ai.v1.UpdateSystemPromptRequest\x1a!.ai.v1.UpdateSystemPromptResponse\x125\n" +
+	"\x06Health\x12\x14.ai.v1.HealthRequest\x1a\x15.ai.v1.HealthResponseB!Z\x1fagrobot/proto/gen/go/ai/v1;aiv1b\x06proto3"
 
 var (
 	file_ai_v1_ai_proto_rawDescOnce sync.Once
@@ -153,19 +1019,51 @@ func file_ai_v1_ai_proto_rawDescGZIP() []byte {
 	return file_ai_v1_ai_proto_rawDescData
 }
 
-var file_ai_v1_ai_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_ai_v1_ai_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
 var file_ai_v1_ai_proto_goTypes = []any{
-	(*ChatRequest)(nil),  // 0: ai.v1.ChatRequest
-	(*ChatResponse)(nil), // 1: ai.v1.ChatResponse
+	(*ChatRequest)(nil),                // 0: ai.v1.ChatRequest
+	(*ChatResponse)(nil),               // 1: ai.v1.ChatResponse
+	(*ChatMessage)(nil),                // 2: ai.v1.ChatMessage
+	(*GetChatHistoryRequest)(nil),      // 3: ai.v1.GetChatHistoryRequest
+	(*GetChatHistoryResponse)(nil),     // 4: ai.v1.GetChatHistoryResponse
+	(*ClearChatHistoryRequest)(nil),    // 5: ai.v1.ClearChatHistoryRequest
+	(*ClearChatHistoryResponse)(nil),   // 6: ai.v1.ClearChatHistoryResponse
+	(*ListChatSessionsRequest)(nil),    // 7: ai.v1.ListChatSessionsRequest
+	(*ChatSessionItem)(nil),            // 8: ai.v1.ChatSessionItem
+	(*ListChatSessionsResponse)(nil),   // 9: ai.v1.ListChatSessionsResponse
+	(*GetLLMConfigRequest)(nil),        // 10: ai.v1.GetLLMConfigRequest
+	(*GetLLMConfigResponse)(nil),       // 11: ai.v1.GetLLMConfigResponse
+	(*GetSystemPromptRequest)(nil),     // 12: ai.v1.GetSystemPromptRequest
+	(*GetSystemPromptResponse)(nil),    // 13: ai.v1.GetSystemPromptResponse
+	(*UpdateSystemPromptRequest)(nil),  // 14: ai.v1.UpdateSystemPromptRequest
+	(*UpdateSystemPromptResponse)(nil), // 15: ai.v1.UpdateSystemPromptResponse
+	(*HealthRequest)(nil),              // 16: ai.v1.HealthRequest
+	(*HealthResponse)(nil),             // 17: ai.v1.HealthResponse
 }
 var file_ai_v1_ai_proto_depIdxs = []int32{
-	0, // 0: ai.v1.AIService.Chat:input_type -> ai.v1.ChatRequest
-	1, // 1: ai.v1.AIService.Chat:output_type -> ai.v1.ChatResponse
-	1, // [1:2] is the sub-list for method output_type
-	0, // [0:1] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	2,  // 0: ai.v1.GetChatHistoryResponse.messages:type_name -> ai.v1.ChatMessage
+	8,  // 1: ai.v1.ListChatSessionsResponse.sessions:type_name -> ai.v1.ChatSessionItem
+	0,  // 2: ai.v1.AIService.Chat:input_type -> ai.v1.ChatRequest
+	3,  // 3: ai.v1.AIService.GetChatHistory:input_type -> ai.v1.GetChatHistoryRequest
+	5,  // 4: ai.v1.AIService.ClearChatHistory:input_type -> ai.v1.ClearChatHistoryRequest
+	7,  // 5: ai.v1.AIService.ListChatSessions:input_type -> ai.v1.ListChatSessionsRequest
+	10, // 6: ai.v1.AIService.GetLLMConfig:input_type -> ai.v1.GetLLMConfigRequest
+	12, // 7: ai.v1.AIService.GetSystemPrompt:input_type -> ai.v1.GetSystemPromptRequest
+	14, // 8: ai.v1.AIService.UpdateSystemPrompt:input_type -> ai.v1.UpdateSystemPromptRequest
+	16, // 9: ai.v1.AIService.Health:input_type -> ai.v1.HealthRequest
+	1,  // 10: ai.v1.AIService.Chat:output_type -> ai.v1.ChatResponse
+	4,  // 11: ai.v1.AIService.GetChatHistory:output_type -> ai.v1.GetChatHistoryResponse
+	6,  // 12: ai.v1.AIService.ClearChatHistory:output_type -> ai.v1.ClearChatHistoryResponse
+	9,  // 13: ai.v1.AIService.ListChatSessions:output_type -> ai.v1.ListChatSessionsResponse
+	11, // 14: ai.v1.AIService.GetLLMConfig:output_type -> ai.v1.GetLLMConfigResponse
+	13, // 15: ai.v1.AIService.GetSystemPrompt:output_type -> ai.v1.GetSystemPromptResponse
+	15, // 16: ai.v1.AIService.UpdateSystemPrompt:output_type -> ai.v1.UpdateSystemPromptResponse
+	17, // 17: ai.v1.AIService.Health:output_type -> ai.v1.HealthResponse
+	10, // [10:18] is the sub-list for method output_type
+	2,  // [2:10] is the sub-list for method input_type
+	2,  // [2:2] is the sub-list for extension type_name
+	2,  // [2:2] is the sub-list for extension extendee
+	0,  // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_ai_v1_ai_proto_init() }
@@ -179,7 +1077,7 @@ func file_ai_v1_ai_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_ai_v1_ai_proto_rawDesc), len(file_ai_v1_ai_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   18,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
