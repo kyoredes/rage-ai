@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:latest
+    container_name: postgres_sub
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: sub
+    ports:
+      - "5430:5432"
+    volumes:
+      - postgres_sub:/var/lib/postgresql/sub
+
+volumes:
+  postgres_sub:

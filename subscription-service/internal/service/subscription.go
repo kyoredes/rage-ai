@@ -1,0 +1,79 @@
+package service
+
+import (
+	"subscription/internal/dto"
+	"subscription/internal/exception"
+	"subscription/internal/models"
+	"subscription/internal/repository"
+
+	"github.com/google/uuid"
+)
+
+type SubscriptionService struct {
+	repo *repository.SubscriptionRepository
+}
+
+func NewSubscriptionService(repo *repository.SubscriptionRepository) *SubscriptionService {
+	return &SubscriptionService{
+		repo: repo,
+	}
+}
+
+func (s *SubscriptionService) CreateSub(subDTO *dto.CreateSubscriptionDTO) (*dto.SubscriptionDTO, error) {
+	sub := &models.Subscription{
+		UserID:    subDTO.UserID,
+		StartsAt:  subDTO.StartsAt,
+		ExpiresAt: subDTO.ExpiresAt,
+	}
+	sub, err := s.repo.CreateSub(sub)
+	if err != nil {
+		return nil, err
+	}
+	return &dto.SubscriptionDTO{
+		Uuid:      sub.Uuid,
+		UserID:    sub.UserID,
+		StartsAt:  sub.StartsAt,
+		ExpiresAt: sub.ExpiresAt,
+	}, nil
+}
+
+func (s *SubscriptionService) GetSubByUuid(id uuid.UUID) (*dto.SubscriptionDTO, error) {
+	sub, err := s.repo.GetSubByUuid(id)
+	if err != nil {
+		return nil, err
+	}
+	return &dto.SubscriptionDTO{
+		Uuid:      sub.Uuid,
+		UserID:    sub.UserID,
+		StartsAt:  sub.StartsAt,
+		ExpiresAt: sub.ExpiresAt,
+	}, nil
+}
+
+func (s *SubscriptionService) GetOrCreateSub(subDTO *dto.CreateSubscriptionDTO) (*dto.SubscriptionDTO, error) {
+	sub, err := s.GetSubByUuid(subDTO.UserID)
+	if err != nil {
+		if err == exception.ErrSubscriptionNotFound {
+			sub, err = s.CreateSub(subDTO)
+			if err != nil {
+				return nil, err
+			}
+			return sub, nil
+		}
+		return nil, err
+	}
+	return sub, nil
+}
+
+func (s *SubscriptionService) GetSubByUserId(userId uuid.UUID) (*dto.SubscriptionDTO, error) {
+	sub, err := s.repo.GetSubByUserId(userId)
+	if err != nil {
+		return nil, err
+	}
+	return &dto.SubscriptionDTO{
+		Uuid:      sub.Uuid,
+		UserID:    sub.UserID,
+		StartsAt:  sub.StartsAt,
+		ExpiresAt: sub.ExpiresAt,
+	}, nil
+}
