@@ -111,3 +111,35 @@ func (h *TelegramHandler) GetSubscription(c *gin.Context) {
 		"subscription": subscription,
 	})
 }
+
+func (h *TelegramHandler) Chat(c *gin.Context) {
+	logger := logging.Logger
+
+	var request dto.TelegramChatDTO
+	if err := c.ShouldBindJSON(&request); err != nil {
+		logger.Debug("Wrong request", zap.Error(err))
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Wrong request",
+		})
+		return
+	}
+
+	chat, err := h.telegramService.Chat(request.TelegramID, request.Prompt)
+	if err != nil {
+		if errors.Is(err, exceptions.ErrUserNotFound) {
+			c.JSON(http.StatusNotFound, gin.H{
+				"error": "User not found",
+			})
+			return
+		}
+		logger.Error("Error in telegram chat", zap.Error(err))
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": "Error processing chat request",
+		})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"status": "ok",
+		"chat":   chat,
+	})
+}

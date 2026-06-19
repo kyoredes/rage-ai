@@ -31,6 +31,7 @@ func main() {
 	cfg := config.NewConfig()
 	authConfig := config.NewAuthConfig()
 	subConfig := config.NewSubConfig()
+	aiConfig := config.NewAIConfig()
 	devConfig := config.NewDevConfig()
 
 	if err := logging.InitLogger(cfg.LoggingMode); err != nil {
@@ -41,7 +42,7 @@ func main() {
 
 	logger.Info("Starting server... with", zap.String("host", cfg.Host), zap.String("port", cfg.Port))
 
-	grpcClients, err := client.NewClients(authConfig, subConfig)
+	grpcClients, err := client.NewClients(authConfig, subConfig, aiConfig)
 	if err != nil {
 		logger.Fatal("failed to create gRPC clients", zap.Error(err))
 	}

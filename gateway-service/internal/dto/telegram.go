@@ -22,3 +22,13 @@ type TelegramSubscription struct {
 	StartsAt       int64  `json:"startsAt"`
 	ExpiresAt      int64  `json:"expiresAt"`
 }
+
+type TelegramChatDTO struct {
+	TelegramID string `json:"telegramID" binding:"required"`
+	Prompt     string `json:"prompt" binding:"required"`
+}
+
+type TelegramChatResponse struct {
+	TelegramID string `json:"telegramID"`
+	Response   string `json:"response"`
+}

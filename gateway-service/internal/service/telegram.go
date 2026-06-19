@@ -10,6 +10,7 @@ import (
 	"time"
 
 	authv1 "rageai/proto/gen/go/auth/v1"
+	aiv1 "rageai/proto/gen/go/ai/v1"
 	subscriptionv1 "rageai/proto/gen/go/subscription/v1"
 
 	"go.uber.org/zap"
@@ -130,5 +131,30 @@ func (s *TelegramService) GetSubscription(telegramID string) (*dto.TelegramSubsc
 		UserID:         subResp.GetUserId(),
 		StartsAt:       subResp.GetStartsAt(),
 		ExpiresAt:      subResp.GetExpiresAt(),
+	}, nil
+}
+
+func (s *TelegramService) Chat(telegramID, prompt string) (*dto.TelegramChatResponse, error) {
+	logger := logging.Logger
+
+	if _, err := s.GetProfile(telegramID); err != nil {
+		return nil, err
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), s.timeout)
+	defer cancel()
+
+	aiResp, err := s.clients.AI.Chat(ctx, &aiv1.ChatRequest{
+		TelegramId: telegramID,
+		Prompt:     prompt,
+	})
+	if err != nil {
+		logger.Error("ai service grpc Chat failed", zap.Error(err))
+		return nil, exceptions.ErrResponseExternalService
+	}
+
+	return &dto.TelegramChatResponse{
+		TelegramID: aiResp.GetTelegramId(),
+		Response:   aiResp.GetResponse(),
 	}, nil
 }

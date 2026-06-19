@@ -14,6 +14,7 @@ func SetupRouter(h *handler.Handler, authMiddleware gin.HandlerFunc) *gin.Engine
 	tg.POST("/start", h.Telegram.StartTelegram)
 	tg.POST("/profile", h.Telegram.GetProfile)
 	tg.POST("/subscription", h.Telegram.GetSubscription)
+	tg.POST("/chat", h.Telegram.Chat)
 
 	return router
 }

@@ -58,6 +58,18 @@ func NewSubConfig() *SubConfig {
 	}
 }
 
+type AIConfig struct {
+	AIHost     string
+	AIGRPCPort string
+}
+
+func NewAIConfig() *AIConfig {
+	return &AIConfig{
+		AIHost:     viper.GetString("AI_HOST"),
+		AIGRPCPort: viper.GetString("AI_GRPC_PORT"),
+	}
+}
+
 func Init() {
 	viper.AutomaticEnv()
 	viper.SetDefault("HOST", "0.0.0.0")
@@ -71,6 +83,9 @@ func Init() {
 
 	viper.SetDefault("SUB_HOST", "localhost")
 	viper.SetDefault("SUB_GRPC_PORT", "50052")
+
+	viper.SetDefault("AI_HOST", "localhost")
+	viper.SetDefault("AI_GRPC_PORT", "50053")
 
 	viper.SetDefault("COMMON_PUB_KEY", "secret")
 }
