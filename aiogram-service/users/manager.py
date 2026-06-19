@@ -1,7 +1,7 @@
 import httpx
 from config.core import settings
 import logging
-from users.schemas import ClientModel, UserModel
+from users.schemas import ClientModel, SubscriptionModel, UserModel
 from contextlib import asynccontextmanager
 
 
@@ -84,4 +84,35 @@ class UserManager:
                 )
             except Exception as e:
                 logger.error("Error getting profile %s: %s", tg_id, e)
+                return None
+
+    async def get_subscription(self, tg_id: str) -> SubscriptionModel | None:
+        headers = await self._get_headers()
+        body = {"telegramID": tg_id}
+        async with self._get_client() as client:
+            try:
+                response = await client.post(
+                    headers=headers,
+                    url=f"http://{self.backend_url}/telegram/subscription",
+                    json=body,
+                )
+                if response.status_code != 200:
+                    logger.error(
+                        "Unable to get subscription for client %s: status %s",
+                        tg_id,
+                        response.status_code,
+                    )
+                    return None
+                result = response.json()
+                if result.get("status") != "ok":
+                    return None
+                sub = result.get("subscription") or {}
+                return SubscriptionModel(
+                    subscription_id=sub.get("subscriptionID", ""),
+                    user_id=sub.get("userID", ""),
+                    starts_at=sub.get("startsAt", 0),
+                    expires_at=sub.get("expiresAt", 0),
+                )
+            except Exception as e:
+                logger.error("Error getting subscription %s: %s", tg_id, e)
                 return None

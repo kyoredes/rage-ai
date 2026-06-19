@@ -15,3 +15,10 @@ type TelegramProfile struct {
 	UserID     string `json:"userID"`
 	Email      string `json:"email,omitempty"`
 }
+
+type TelegramSubscription struct {
+	SubscriptionID string `json:"subscriptionID"`
+	UserID         string `json:"userID"`
+	StartsAt       int64  `json:"startsAt"`
+	ExpiresAt      int64  `json:"expiresAt"`
+}

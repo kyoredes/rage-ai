@@ -1,7 +1,9 @@
 package handler
 
 import (
+	"errors"
 	"gateway/internal/dto"
+	"gateway/internal/exceptions"
 	"gateway/internal/logging"
 	"gateway/internal/service"
 	"net/http"
@@ -60,6 +62,12 @@ func (h *TelegramHandler) GetProfile(c *gin.Context) {
 
 	profile, err := h.telegramService.GetProfile(request.TelegramID)
 	if err != nil {
+		if errors.Is(err, exceptions.ErrUserNotFound) {
+			c.JSON(http.StatusNotFound, gin.H{
+				"error": "User not found",
+			})
+			return
+		}
 		logger.Error("Error getting telegram profile", zap.Error(err))
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": "Error getting telegram profile",
@@ -69,5 +77,37 @@ func (h *TelegramHandler) GetProfile(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"status":  "ok",
 		"profile": profile,
+	})
+}
+
+func (h *TelegramHandler) GetSubscription(c *gin.Context) {
+	logger := logging.Logger
+
+	var request dto.TelegramUserDTO
+	if err := c.ShouldBindJSON(&request); err != nil {
+		logger.Debug("Wrong request", zap.Error(err))
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Wrong request",
+		})
+		return
+	}
+
+	subscription, err := h.telegramService.GetSubscription(request.TelegramID)
+	if err != nil {
+		if errors.Is(err, exceptions.ErrUserNotFound) {
+			c.JSON(http.StatusNotFound, gin.H{
+				"error": "User not found",
+			})
+			return
+		}
+		logger.Error("Error getting telegram subscription", zap.Error(err))
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": "Error getting telegram subscription",
+		})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"status":       "ok",
+		"subscription": subscription,
 	})
 }

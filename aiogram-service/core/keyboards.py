@@ -14,9 +14,12 @@ def get_start_keyboard():
     )
 
 
-def get_profile_keyboard():
+def get_back_keyboard():
     return InlineKeyboardMarkup(
         inline_keyboard=[
             [InlineKeyboardButton(text="👈 Назад", callback_data="main_menu")],
         ]
     )
+
+
+get_profile_keyboard = get_back_keyboard

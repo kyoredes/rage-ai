@@ -1,8 +1,8 @@
 from aiogram import Router, F, types
 from aiogram.filters import CommandStart
 from aiogram.types import Message
-from core.keyboards import get_profile_keyboard, get_start_keyboard
-from users.answers import get_profile_info_answer
+from core.keyboards import get_back_keyboard, get_start_keyboard
+from users.answers import get_profile_info_answer, get_subscription_info_answer
 from users.manager import UserManager
 
 users_router = Router(name="users")
@@ -32,6 +32,24 @@ async def get_profile(callback: types.CallbackQuery):
     await callback.message.answer(
         answer,
         parse_mode="Markdown",
-        reply_markup=get_profile_keyboard(),
+        reply_markup=get_back_keyboard(),
+    )
+    await callback.answer()
+
+
+@users_router.callback_query(F.data == "subscription")
+async def get_subscription(callback: types.CallbackQuery):
+    user_manager = UserManager()
+    subscription = await user_manager.get_subscription(str(callback.from_user.id))
+    if subscription is None:
+        await callback.message.answer("Не удалось загрузить информацию о тарифе")
+        await callback.answer()
+        return
+
+    answer = await get_subscription_info_answer(subscription)
+    await callback.message.answer(
+        answer,
+        parse_mode="Markdown",
+        reply_markup=get_back_keyboard(),
     )
     await callback.answer()
