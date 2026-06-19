@@ -5,3 +5,9 @@ type TelegramStartResult struct {
 	AccessToken  string
 	RefreshToken string
 }
+
+type TelegramProfileResult struct {
+	UserID     string
+	TelegramID string
+	Email      string
+}

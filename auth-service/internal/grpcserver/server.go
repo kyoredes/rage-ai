@@ -38,3 +38,21 @@ func (s *AuthServer) StartTelegram(ctx context.Context, req *authv1.StartTelegra
 		RefreshToken: result.RefreshToken,
 	}, nil
 }
+
+func (s *AuthServer) GetTelegramProfile(ctx context.Context, req *authv1.GetTelegramProfileRequest) (*authv1.GetTelegramProfileResponse, error) {
+	if req.GetTelegramId() == "" {
+		return nil, status.Error(codes.InvalidArgument, "telegram_id is required")
+	}
+
+	profile, err := s.authService.GetTelegramProfile(req.GetTelegramId())
+	if err != nil {
+		logging.Logger.Error("grpc GetTelegramProfile failed", zap.Error(err))
+		return nil, status.Error(codes.NotFound, "telegram profile not found")
+	}
+
+	return &authv1.GetTelegramProfileResponse{
+		UserId:     profile.UserID,
+		TelegramId: profile.TelegramID,
+		Email:      profile.Email,
+	}, nil
+}

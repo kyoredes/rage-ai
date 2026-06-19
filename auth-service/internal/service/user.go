@@ -2,11 +2,13 @@ package service
 
 import (
 	"auth/exceptions"
+	"auth/internal/dto"
 	"auth/internal/logging"
 	"auth/internal/models"
 	"auth/internal/repository"
 	"auth/internal/security"
 	"errors"
+	"strings"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
@@ -86,4 +88,33 @@ func (s *UserService) GetOrCreateTelegramUser(TelegramID string) (*models.Telegr
 	}
 
 	return telegramUser, nil
+}
+
+func (s *UserService) GetTelegramProfile(telegramID string) (*dto.TelegramProfileResult, error) {
+	logger := logging.Logger
+	telegramUser, err := s.repo.GetTelegramUserByTelegramID(telegramID)
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, exceptions.ErrUserNotFound
+		}
+		logger.Error("Error getting telegram user", zap.Error(err))
+		return nil, err
+	}
+
+	user, err := s.repo.GetUserByID(telegramUser.UserID)
+	if err != nil {
+		logger.Error("Error getting user for telegram profile", zap.Error(err))
+		return nil, err
+	}
+
+	email := user.Email
+	if strings.HasSuffix(email, "@telegram.org") {
+		email = ""
+	}
+
+	return &dto.TelegramProfileResult{
+		UserID:     user.Uuid.String(),
+		TelegramID: telegramUser.TelegramID,
+		Email:      email,
+	}, nil
 }

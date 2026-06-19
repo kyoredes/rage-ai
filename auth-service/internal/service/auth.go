@@ -53,3 +53,13 @@ func (s *AuthService) StartTelegramWithUser(TelegramID string) (*dto.TelegramSta
 		RefreshToken: refreshToken,
 	}, nil
 }
+
+func (s *AuthService) GetTelegramProfile(telegramID string) (*dto.TelegramProfileResult, error) {
+	logger := logging.Logger
+	profile, err := s.userService.GetTelegramProfile(telegramID)
+	if err != nil {
+		logger.Error("Error getting telegram profile", zap.Error(err))
+		return nil, err
+	}
+	return profile, nil
+}
