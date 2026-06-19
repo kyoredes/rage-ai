@@ -1,151 +1,122 @@
+> 🇷🇺 [Русская версия / Russian version](README.ru.md)
+
 # RageAI
 
-Бот с AI на базе микросервисной архитектуры. Бекенд написан на Go и Python.
+An AI-powered Telegram bot built on a microservices architecture. Backend services are written in Go and Python.
 
-## Возможности
+## Features
 
-- Общение с AI-моделью в свободном формате
-- Напоминания: пользователь создаёт событие через чат, бот сохраняет его и отправляет уведомление в нужное время
-- Система подписок и лимитов запросов
+- Free-form AI chat via Telegram
+- User profile and subscription info
+- Subscription plans and request limits (in progress)
+- Reminders: create events in chat and get notified on schedule (planned)
 
-## Архитектура
+## Architecture
 
-Gateway оркестрирует все вызовы — сервисы не знают друг о друге и не вызывают друг друга напрямую.
-
-```
-aiogram (Python)
-      │  ▲
-      │  │ напоминания
-      ▼  │
-   gateway (Go)
-      ├──▶ auth-service         # 1. проверка токена
-      ├──▶ subscription-service # 2. проверка лимитов
-      ├──▶ ai-service           # 3. запрос к AI-модели
-      └──▶ reminder-service     # создание / управление событиями
-```
-
-Сервисы общаются через **gRPC**. Auth-токены кешируются в Redis.
-
-### Флоу напоминаний
+The gateway orchestrates all calls — services are isolated and never call each other directly.
 
 ```
-Пользователь → "Напомни завтра в 10:00 позвонить маме"
-      ↓
-ai-service извлекает дату, время и текст из сообщения
-      ↓
-reminder-service сохраняет событие в PostgreSQL
-      ↓
-планировщик срабатывает в 10:00
-      ↓
-aiogram отправляет сообщение пользователю
+aiogram-service (Python)
+      │
+      ▼
+gateway-service (Go)
+      ├──▶ auth-service          # registration, profile
+      ├──▶ subscription-service  # plans and limits
+      └──▶ ai-service            # LLM requests
 ```
 
-## Сервисы
+Services communicate over **gRPC**. Auth tokens are cached in Redis.
 
-| Сервис | Язык | Описание |
+### AI chat flow
+
+```
+User sends a message in Telegram
+      ↓
+aiogram-service → gateway-service
+      ↓
+auth-service (profile) + subscription-service (limits)
+      ↓
+ai-service (OpenAI in prod, G4F as fallback / G4F only in dev)
+      ↓
+Response delivered back to the user
+```
+
+## Services
+
+| Service | Stack | Description |
 |---|---|---|
-| `services/bot` | Python, aiogram 3 | Telegram-интерфейс, приём и отправка сообщений |
-| `services/gateway` | Go, chi | Оркестрация вызовов, JWT middleware |
-| `services/auth-service` | Go | Регистрация, авторизация, выдача JWT |
-| `services/subscription-service` | Go | Тарифные планы, лимиты запросов |
-| `services/ai-service` | Python, FastAPI | Интеграция с AI-моделью, streaming-ответы |
-| `services/reminder-service` | Go | Хранение событий, планировщик уведомлений |
+| `aiogram-service` | Python, aiogram 3 | Telegram bot UI |
+| `gateway-service` | Go, Gin | HTTP API, gRPC orchestration |
+| `auth-service` | Go | Registration, auth, JWT |
+| `subscription-service` | Go | Plans and request limits |
+| `ai-service` | Python, gRPC | LLM integration (OpenAI + G4F) |
 
-## Структура репозитория
+## Repository layout
 
 ```
-rageai/
-├── services/
-│   ├── bot/
-│   ├── gateway/
-│   ├── auth-service/
-│   ├── subscription-service/
-│   ├── ai-service/
-│   └── reminder-service/
-├── proto/               # gRPC контракты (.proto файлы)
+agrobot/
+├── aiogram-service/
+├── gateway-service/
+├── auth-service/
+├── subscription-service/
+├── ai-service/
+├── proto/               # gRPC contracts (.proto)
 ├── deploy/
-│   ├── docker-compose.yml
-│   └── docker-compose.prod.yml
+│   └── docker-compose.yml
 ├── scripts/
-│   └── gen-proto.sh     # кодогенерация из .proto
+│   └── gen-proto.sh     # proto code generation
 ├── .env.example
-└── README.md
+├── README.md
+└── README.ru.md
 ```
 
-## Инфраструктура
+## Infrastructure
 
-- **PostgreSQL** — отдельная база на каждый сервис
-- **Redis** — общий, кеширование токенов и rate limiting
-- **Docker Compose** — локальная разработка
-- **nginx / Traefik** — TLS termination перед gateway в продакшне
+- **PostgreSQL** — separate databases for auth and subscription
+- **Redis** — token cache and AI chat history
+- **Docker Compose** — local development
 
-## Локальный запуск
+## Local setup
 
-Требования: Docker, Docker Compose, Go 1.22+, Python 3.12+
+Requirements: Docker, Docker Compose
 
 ```bash
-git clone https://github.com/you/rageai.git
-cd rageai
+git clone https://github.com/kyoredes/rage-ai.git
+cd rage-ai
 
-cp .env.example .env
-# заполни .env своими ключами
+cp deploy/.env.example deploy/.env
+# set BOT_TOKEN and OPENAI_API_KEY if needed
 
 docker compose -f deploy/docker-compose.yml up --build
 ```
 
-## Переменные окружения
+## Environment variables
+
+Main file for Docker: `deploy/.env`
 
 ```env
-TELEGRAM_TOKEN=
+BOT_TOKEN=
+COMMON_PUB_KEY=secret
+JWT_SECRET_KEY=dev-jwt-secret-key-change-in-prod!!
 
-AI_API_KEY=
-AI_MODEL=
-
-JWT_SECRET=
-
-POSTGRES_USER=
-POSTGRES_PASSWORD=
-POSTGRES_DB=rageai
-
-REDIS_URL=redis://redis:6379
+# ai-service: DEBUG=true → G4F only, false → OpenAI + G4F fallback
+AI_DEBUG=true
+OPENAI_API_KEY=
+OPENAI_BASE_URL=https://api.openai.com/v1
 ```
 
-Файл `.env` добавлен в `.gitignore`.
+Each service may also have its own `.env` for running outside Docker.
 
-## Разработка
+## Development
 
 ```bash
-# Кодогенерация gRPC из .proto файлов
+# Generate gRPC code from .proto files
 ./scripts/gen-proto.sh
 
-# Запустить один сервис локально
-cd services/gateway && go run ./cmd/main.go
-
-# Тесты
-cd services/auth-service && go test ./...
+# Run auth-service tests
+cd auth-service && go test ./...
 ```
 
-## CI/CD
-
-GitHub Actions запускает деплой только изменённых сервисов через path filters:
-
-```yaml
-on:
-  push:
-    paths:
-      - 'services/gateway/**'
-      - 'proto/**'
-```
-
-## Порядок реализации
-
-1. `auth-service` — регистрация, JWT
-2. `gateway` — оркестрация с заглушками
-3. `bot` — базовый диалог
-4. `subscription-service` — планы и лимиты
-5. `ai-service` — интеграция с AI, streaming
-6. `reminder-service` — события и планировщик
-
-## Лицензия
+## License
 
 MIT
