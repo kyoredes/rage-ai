@@ -15,21 +15,19 @@ class UserManager:
 
     @asynccontextmanager
     async def _get_client(self):
-        """Контекстный менеджер для правильного управления HTTP-клиентом"""
         async with httpx.AsyncClient() as client:
             yield client
 
     async def _get_headers(self) -> dict:
-        headers = {
-            "Authorization": f"{self.api_key}",
+        return {
+            "Authorization": self.api_key,
         }
-        return headers
 
     async def start(self, tg_id: str) -> UserModel | None:
         headers = await self._get_headers()
-        logger.debug(f"Starting telegram with telegram id {tg_id}")
+        logger.debug("Starting telegram with telegram id %s", tg_id)
         body = {
-            'TelegramID': tg_id,
+            "telegramID": tg_id,
         }
         async with self._get_client() as client:
             try:
@@ -40,17 +38,18 @@ class UserManager:
                 )
                 if response.status_code != 200:
                     logger.error(
-                        f"Unable to start telegram with client {tg_id}: status {response.status_code}"
+                        "Unable to start telegram with client %s: status %s",
+                        tg_id,
+                        response.status_code,
                     )
                     return None
                 result = response.json()
-                logger.debug(f"Response {result}")
+                logger.debug("Response %s", result)
                 if not result:
                     return None
                 if result.get("status") != "ok":
-                    raise Exception(f"Error gateway {result.get('status')}")
-                client_model = UserModel(**result)
-                return client_model
+                    raise RuntimeError(f"Error gateway {result.get('status')}")
+                return UserModel(status=result["status"])
             except Exception as e:
-                logger.error(f"Error {tg_id}: {e}")
+                logger.error("Error %s: %s", tg_id, e)
                 return None
