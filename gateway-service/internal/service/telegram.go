@@ -58,3 +58,23 @@ func (s *TelegramService) StartTelegram(telegramID string) (*dto.TelegramInfo, e
 		DeviceID:   telegramID,
 	}, nil
 }
+
+func (s *TelegramService) GetProfile(telegramID string) (*dto.TelegramProfile, error) {
+	logger := logging.Logger
+	ctx, cancel := context.WithTimeout(context.Background(), s.timeout)
+	defer cancel()
+
+	authResp, err := s.clients.Auth.GetTelegramProfile(ctx, &authv1.GetTelegramProfileRequest{
+		TelegramId: telegramID,
+	})
+	if err != nil {
+		logger.Error("auth service grpc GetTelegramProfile failed", zap.Error(err))
+		return nil, exceptions.ErrResponseExternalService
+	}
+
+	return &dto.TelegramProfile{
+		TelegramID: authResp.GetTelegramId(),
+		UserID:     authResp.GetUserId(),
+		Email:      authResp.GetEmail(),
+	}, nil
+}

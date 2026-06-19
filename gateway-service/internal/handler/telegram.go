@@ -45,3 +45,29 @@ func (h *TelegramHandler) StartTelegram(c *gin.Context) {
 		"info":   info,
 	})
 }
+
+func (h *TelegramHandler) GetProfile(c *gin.Context) {
+	logger := logging.Logger
+
+	var request dto.TelegramUserDTO
+	if err := c.ShouldBindJSON(&request); err != nil {
+		logger.Debug("Wrong request", zap.Error(err))
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Wrong request",
+		})
+		return
+	}
+
+	profile, err := h.telegramService.GetProfile(request.TelegramID)
+	if err != nil {
+		logger.Error("Error getting telegram profile", zap.Error(err))
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": "Error getting telegram profile",
+		})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"status":  "ok",
+		"profile": profile,
+	})
+}
