@@ -5,6 +5,7 @@ from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_openai import ChatOpenAI
 
+from config.prompts import ASSISTANT_SYSTEM_PROMPT
 from config.settings import settings
 from utils.response import is_invalid_llm_response
 
@@ -17,7 +18,7 @@ class OpenAIManager:
         self.model = "gpt-3.5-turbo"
         self.temperature = 0.2
         self.max_tokens = 3000
-        self.system_message = "Ты полезный AI-ассистент. Отвечай на вопросы пользователя."
+        self.system_message = ASSISTANT_SYSTEM_PROMPT
 
         if llm is None:
             self.llm = ChatOpenAI(

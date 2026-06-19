@@ -10,6 +10,7 @@ from redis.asyncio import Redis
 from redis.backoff import NoBackoff
 from redis.retry import Retry
 
+from config.prompts import G4F_SYSTEM_PROMPT
 from config.settings import settings
 from llm.errors import G4F_FALLBACK_ERROR_MESSAGE, LLMUserFacingError
 from llm.g4f_models import G4F_FALLBACK_MODELS, G4F_MODELS, G4FModelConfig
@@ -36,13 +37,7 @@ class G4FManager:
         )
         self.history_key = f"g4f_history:{session_id}"
         self.default_history = [
-            {
-                "role": "system",
-                "content": (
-                    "Ты полезный AI-ассистент. Отвечай на вопросы пользователя "
-                    "только обычным текстом, без аудио, изображений и файлов."
-                ),
-            },
+            {"role": "system", "content": G4F_SYSTEM_PROMPT},
         ]
         self.redis_status = True
 

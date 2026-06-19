@@ -3,6 +3,7 @@ from aiogram.filters import CommandStart
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 from core.keyboards import get_back_keyboard, get_start_keyboard
+from core.typing_indicator import show_typing
 from users.answers import (
     CHAT_ERROR_ANSWER,
     get_profile_info_answer,
@@ -75,7 +76,8 @@ async def neuro_start(callback: types.CallbackQuery, state: FSMContext):
 async def neuro_chat(message: Message, state: FSMContext):
     try:
         user_manager = UserManager()
-        chat = await user_manager.chat(str(message.from_user.id), message.text or "")
+        async with show_typing(message):
+            chat = await user_manager.chat(str(message.from_user.id), message.text or "")
         if chat is None or not chat.response:
             await message.answer(CHAT_ERROR_ANSWER, reply_markup=get_back_keyboard())
             return

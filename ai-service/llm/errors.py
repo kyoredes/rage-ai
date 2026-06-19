@@ -1,9 +1,4 @@
-G4F_FALLBACK_ERROR_MESSAGE = (
-    "Сейчас не удалось получить ответ от нейросети. "
-    "Пожалуйста, попробуйте ещё раз через несколько минут. "
-    "Если ошибка повторится — напишите в поддержку."
-)
-
+from config.prompts import LLM_FALLBACK_ERROR_MESSAGE as G4F_FALLBACK_ERROR_MESSAGE
 
 class LLMUserFacingError(Exception):
     """Ошибка с текстом, безопасным для показа пользователю."""
